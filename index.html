@@ -10,7 +10,7 @@
             --bg-card: #ffffff;
             --border-color: #d2d2d7;
             --text-main: #1d1d1f;
-            --text-muted: #515156;
+            --text-muted: #3a3a3c;
             --accent: #0066cc;
             --accent-rgb: 0, 102, 204;
             --badge-bg: rgba(0, 102, 204, 0.12);
@@ -26,7 +26,7 @@
             --bg-card: #1c1c1e;
             --border-color: #38383a;
             --text-main: #f5f5f7;
-            --text-muted: #d1d1d6;
+            --text-muted: #ebebf5;
             --accent: #0a84ff;
             --accent-rgb: 10, 132, 255;
             --badge-bg: rgba(10, 132, 255, 0.25);
@@ -89,7 +89,6 @@
             flex-wrap: wrap;
         }
 
-        /* macOS Native Style Segmented Control Group */
         .macos-segmented-control {
             display: inline-flex;
             background: rgba(120, 120, 128, 0.12);
@@ -150,7 +149,6 @@
             margin-right: 2px;
         }
 
-        /* Pure CSS macOS Popover Menu System */
         .macos-popover-container {
             position: relative;
             display: inline-block;
@@ -350,7 +348,7 @@
             display: flex;
             gap: 1rem;
             margin-bottom: 0.85rem;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
         }
 
         .card-links a {
@@ -539,8 +537,8 @@
                 </div>
                 <div>
                     <div class="card-links">
-                        <a href="https://oisd.nl" target="_blank">🏠 OISD Home</a>
-                        <a href="https://github.com/sjhuttoe/oisd-issues" target="_blank">🐛 OISD Issues</a>
+                        <a href="https://oisd.nl" target="_blank">🏠 Homepage</a>
+                        <a href="https://github.com/sjhuttoe/oisd-issues" target="_blank">🐛 Issues</a>
                     </div>
                     <div class="card-footer">
                         <a href="https://big.oisd.nl" target="_blank" class="url-display">https://big.oisd.nl</a>
@@ -564,8 +562,8 @@
                 </div>
                 <div>
                     <div class="card-links">
-                        <a href="https://phishing.army" target="_blank">🏠 Phishing Army Home</a>
-                        <a href="https://github.com/Phishing-Army/submision" target="_blank">🐛 Phishing Army Issues</a>
+                        <a href="https://phishing.army" target="_blank">🏠 Homepage</a>
+                        <a href="https://github.com/Phishing-Army/submision" target="_blank">🐛 Issues</a>
                     </div>
                     <div class="card-footer">
                         <a href="https://phishing.army/download/phishing_army_blocklist_domains.txt" target="_blank" class="url-display">phishing.army/domains.txt</a>
@@ -589,8 +587,8 @@
                 </div>
                 <div>
                     <div class="card-links">
-                        <a href="https://github.com/hagezi/dns-blocklists" target="_blank">🏠 Hagezi Home</a>
-                        <a href="https://github.com/hagezi/dns-blocklists/issues" target="_blank">🐛 Hagezi Issues</a>
+                        <a href="https://github.com/hagezi/dns-blocklists" target="_blank">🏠 Homepage</a>
+                        <a href="https://github.com/hagezi/dns-blocklists/issues" target="_blank">🐛 Issues</a>
                     </div>
                     <div class="card-footer">
                         <a href="https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/pro.txt" target="_blank" class="url-display">hagezi/pro.txt</a>
@@ -608,9 +606,9 @@
             document.documentElement.setAttribute('data-theme', themeCheckbox.checked ? 'dark' : 'light');
         });
 
-        // Fixed Dynamic Filtering Logic matching exact attributes
+        // Fully corrected multi-attribute filtering logic
         document.querySelectorAll('input[type="checkbox"]').forEach(input => {
-            if (input.id !== 'themeToggleCheckbox') {
+            if (input.id !== 'themeToggleCheckbox' && input.id !== 'popoverToggle') {
                 input.addEventListener('change', filterCards);
             }
         });
@@ -618,7 +616,7 @@
         function filterCards() {
             const activeCats = Array.from(document.querySelectorAll('.macos-segmented-control input[id^="cat-"]:checked')).map(i => i.id.replace('cat-', ''));
             const activeStances = Array.from(document.querySelectorAll('.macos-segmented-control input[id^="stance-"]:checked')).map(i => i.id.replace('stance-', ''));
-            const activeSoftware = Array.from(document.querySelectorAll('.macos-popover-menu input:checked')).map(i => i.id.replace('sw-', ''));
+            const activeSoftware = Array.from(document.querySelectorAll('.macos-popover-menu input[type="checkbox"]:checked')).map(i => i.id.replace('sw-', ''));
 
             document.querySelectorAll('.card').forEach(card => {
                 const cardCats = card.dataset.cat.split(' ');
@@ -626,10 +624,14 @@
                 const cardSoftware = card.dataset.software.split(' ');
 
                 const matchesCat = activeCats.length === 0 || activeCats.some(c => cardCats.includes(c));
-                const matchesStance = activeStances.length === 0 || activeStances.some(st => cardStance === st);
+                const matchesStance = activeStances.length === 0 || activeStances.includes(cardStance);
                 const matchesSw = activeSoftware.length === 0 || activeSoftware.some(s => cardSoftware.includes(s));
 
-                card.style.display = (matchesCat && matchesStance && matchesSw) ? 'flex' : 'none';
+                if (matchesCat && matchesStance && matchesSw) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
             });
         }
     </script>
