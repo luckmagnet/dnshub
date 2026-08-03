@@ -108,8 +108,14 @@
 
         .segmented-item input[type="checkbox"] {
             position: absolute;
-            opacity: 0;
+            opacity: 0.001;
+            pointer-events: auto;
             cursor: pointer;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 2;
         }
 
         .segmented-item label {
@@ -123,6 +129,8 @@
             user-select: none;
             transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
             text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
         .segmented-item label:hover {
@@ -155,7 +163,9 @@
         }
 
         .macos-popover-toggle {
-            display: none;
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
         }
 
         .macos-popover-btn {
@@ -425,6 +435,22 @@
         .theme-icon-dark { display: none; }
         [data-theme="dark"] .theme-icon-light { display: none; }
         [data-theme="dark"] .theme-icon-dark { display: inline; }
+
+        /* Pure CSS Native-Fallback Filtering Engine */
+        body:has(#cat-ads:checked) .card:not([data-cat~="ads"]),
+        body:has(#cat-security:checked) .card:not([data-cat~="security"]),
+        body:has(#cat-privacy:checked) .card:not([data-cat~="privacy"]),
+        body:has(#cat-whitelist:checked) .card:not([data-cat~="whitelist"]),
+        body:has(#cat-multi:checked) .card:not([data-cat~="multi"]),
+        body:has(#stance-unyielding:checked) .card:not([data-stance="unyielding"]),
+        body:has(#stance-harmonious:checked) .card:not([data-stance="harmonious"]),
+        body:has(#stance-steadfast:checked) .card:not([data-stance="steadfast"]),
+        body:has(#sw-adguard:checked) .card:not([data-software*="adguard"]),
+        body:has(#sw-pihole:checked) .card:not([data-software*="pi-hole"]),
+        body:has(#sw-ublock:checked) .card:not([data-software*="ublock"]),
+        body:has(#sw-controld:checked) .card:not([data-software*="controld"]) {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -605,35 +631,6 @@
         themeCheckbox.addEventListener('change', () => {
             document.documentElement.setAttribute('data-theme', themeCheckbox.checked ? 'dark' : 'light');
         });
-
-        // Fully corrected multi-attribute filtering logic
-        document.querySelectorAll('input[type="checkbox"]').forEach(input => {
-            if (input.id !== 'themeToggleCheckbox' && input.id !== 'popoverToggle') {
-                input.addEventListener('change', filterCards);
-            }
-        });
-
-        function filterCards() {
-            const activeCats = Array.from(document.querySelectorAll('.macos-segmented-control input[id^="cat-"]:checked')).map(i => i.id.replace('cat-', ''));
-            const activeStances = Array.from(document.querySelectorAll('.macos-segmented-control input[id^="stance-"]:checked')).map(i => i.id.replace('stance-', ''));
-            const activeSoftware = Array.from(document.querySelectorAll('.macos-popover-menu input[type="checkbox"]:checked')).map(i => i.id.replace('sw-', ''));
-
-            document.querySelectorAll('.card').forEach(card => {
-                const cardCats = card.dataset.cat.split(' ');
-                const cardStance = card.dataset.stance;
-                const cardSoftware = card.dataset.software.split(' ');
-
-                const matchesCat = activeCats.length === 0 || activeCats.some(c => cardCats.includes(c));
-                const matchesStance = activeStances.length === 0 || activeStances.includes(cardStance);
-                const matchesSw = activeSoftware.length === 0 || activeSoftware.some(s => cardSoftware.includes(s));
-
-                if (matchesCat && matchesStance && matchesSw) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
     </script>
 </body>
 </html>
