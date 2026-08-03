@@ -10,7 +10,7 @@
             --bg-card: #ffffff;
             --border-color: #d2d2d7;
             --text-main: #1d1d1f;
-            --text-muted: #6e6e73;
+            --text-muted: #515156;
             --accent: #0066cc;
             --accent-rgb: 0, 102, 204;
             --badge-bg: rgba(0, 102, 204, 0.12);
@@ -26,7 +26,7 @@
             --bg-card: #1c1c1e;
             --border-color: #38383a;
             --text-main: #f5f5f7;
-            --text-muted: #8e8e93;
+            --text-muted: #d1d1d6;
             --accent: #0a84ff;
             --accent-rgb: 10, 132, 255;
             --badge-bg: rgba(10, 132, 255, 0.25);
@@ -34,8 +34,8 @@
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
         }
 
-        html {
-            height: 100%;
+        /* Pure standard single-scroll document layout */
+        html, body {
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -44,16 +44,9 @@
             line-height: 1.47059;
             font-weight: 400;
             letter-spacing: -0.022em;
-        }
-
-        body {
-            min-height: 100%;
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            display: flex;
-            flex-direction: column;
+            overflow-x: hidden;
+            overflow-y: auto;
+            height: auto;
         }
 
         header {
@@ -72,7 +65,6 @@
             overflow-x: auto;
             overflow-y: visible;
             gap: 1.5rem;
-            flex-shrink: 0;
             box-sizing: border-box;
             width: 100%;
         }
@@ -270,12 +262,11 @@
         }
 
         main {
-            flex: 1 0 auto;
-            box-sizing: border-box;
             max-width: 1400px;
             width: 100%;
             margin: 0 auto;
             padding: 2.5rem 1.5rem;
+            box-sizing: border-box;
         }
 
         .grid {
@@ -330,13 +321,13 @@
             letter-spacing: -0.01em;
         }
 
-        .badge-unyielding { background: rgba(175, 82, 222, 0.18); color: #9333ea; }
-        .badge-harmonious { background: rgba(48, 176, 199, 0.18); color: #0891b2; }
-        .badge-steadfast { background: rgba(90, 200, 250, 0.18); color: #0284c7; }
+        .badge-unyielding { background: rgba(175, 82, 222, 0.2); color: #8921dc; }
+        .badge-harmonious { background: rgba(48, 176, 199, 0.2); color: #08849b; }
+        .badge-steadfast { background: rgba(90, 200, 250, 0.2); color: #0272aa; }
 
-        [data-theme="dark"] .badge-unyielding { color: #d8b4fe; background: rgba(175, 82, 222, 0.25); }
-        [data-theme="dark"] .badge-harmonious { color: #67e8f9; background: rgba(48, 176, 199, 0.25); }
-        [data-theme="dark"] .badge-steadfast { color: #7dd3fc; background: rgba(90, 200, 250, 0.25); }
+        [data-theme="dark"] .badge-unyielding { color: #d8b4fe; background: rgba(175, 82, 222, 0.3); }
+        [data-theme="dark"] .badge-harmonious { color: #67e8f9; background: rgba(48, 176, 199, 0.3); }
+        [data-theme="dark"] .badge-steadfast { color: #7dd3fc; background: rgba(90, 200, 250, 0.3); }
 
         .card h3 {
             margin: 0 0 0.4rem 0;
@@ -348,9 +339,8 @@
         .card p {
             margin: 0 0 1.25rem 0;
             font-size: 0.85rem;
-            color: var(--text-main);
+            color: var(--text-muted);
             line-height: 1.5;
-            opacity: 0.85;
         }
 
         .card-links {
@@ -385,8 +375,7 @@
         }
 
         .card-footer a.url-display {
-            color: var(--text-main);
-            opacity: 0.8;
+            color: var(--text-muted);
             text-decoration: none;
             max-width: 210px;
             overflow: hidden;
@@ -396,7 +385,7 @@
         }
 
         .card-footer a.url-display:hover {
-            opacity: 1;
+            color: var(--text-main);
         }
 
         .copy-box {
@@ -544,7 +533,7 @@
                             <span class="badge">Ads</span>
                             <span class="badge badge-unyielding">Unyielding</span>
                         </div>
-                        <span style="font-size: 0.75rem; color: var(--text-main); font-weight: 700; opacity: 0.9;">⚡ Strict Guard</span>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">⚡ Strict Guard</span>
                     </div>
                     <h3>OISD Big</h3>
                     <p>Massive, robust blocklist designed to completely block ads, tracking telemetry, and verified malicious web properties.</p>
@@ -569,7 +558,7 @@
                             <span class="badge">Security</span>
                             <span class="badge badge-unyielding">Unyielding</span>
                         </div>
-                        <span style="font-size: 0.75rem; color: var(--text-main); font-weight: 700; opacity: 0.9;">⚡ Strict Guard</span>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">⚡ Strict Guard</span>
                     </div>
                     <h3>Phishing Army</h3>
                     <p>Dynamically updated blocklist focusing entirely on uncovering and shutting out active phishing URLs and digital scam drops.</p>
@@ -594,7 +583,7 @@
                             <span class="badge">Multi</span>
                             <span class="badge badge-harmonious">Harmonious</span>
                         </div>
-                        <span style="font-size: 0.75rem; color: var(--text-main); font-weight: 700; opacity: 0.9;">🌿 Balanced Flow</span>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">🌿 Balanced Flow</span>
                     </div>
                     <h3>Hagezi Multi PRO</h3>
                     <p>Expertly curated multi-functional blocklist protecting against modern ads, malicious hosts, popups, and intrusive tracking.</p>
@@ -619,7 +608,7 @@
                             <span class="badge">Whitelist</span>
                             <span class="badge badge-steadfast">Steadfast</span>
                         </div>
-                        <span style="font-size: 0.75rem; color: var(--text-main); font-weight: 700; opacity: 0.9;">🌊 Stable Anchor</span>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">🌊 Stable Anchor</span>
                     </div>
                     <h3>Hagezi Essential Whitelist</h3>
                     <p>Crucial community whitelisting rules designed to bypass over-blocking issues on major apps, smart devices, and utility platforms.</p>
@@ -644,7 +633,7 @@
                             <span class="badge">Whitelist</span>
                             <span class="badge badge-steadfast">Steadfast</span>
                         </div>
-                        <span style="font-size: 0.75rem; color: var(--text-main); font-weight: 700; opacity: 0.9;">🌊 Stable Anchor</span>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">🌊 Stable Anchor</span>
                     </div>
                     <h3>An02h Whitelist</h3>
                     <p>A precision-tailored whitelist curated to keep common false positives from interfering with standard media streaming and navigation.</p>
@@ -669,7 +658,7 @@
                             <span class="badge">Privacy</span>
                             <span class="badge badge-unyielding">Unyielding</span>
                         </div>
-                        <span style="font-size: 0.75rem; color: var(--text-main); font-weight: 700; opacity: 0.9;">⚡ Strict Guard</span>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">⚡ Strict Guard</span>
                     </div>
                     <h3>AdGuard DNS Filter</h3>
                     <p>An aggressive filter combining multiple upstream lists to shield user data completely from device analytics and targeted telemetry.</p>
