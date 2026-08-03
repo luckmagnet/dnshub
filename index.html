@@ -34,8 +34,13 @@
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
         }
 
-        /* Pure standard single-scroll document layout */
-        html, body {
+        /* Prevent double scrollbars by letting html handle scrolling purely */
+        html {
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+
+        body {
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -44,9 +49,6 @@
             line-height: 1.47059;
             font-weight: 400;
             letter-spacing: -0.022em;
-            overflow-x: hidden;
-            overflow-y: auto;
-            height: auto;
         }
 
         header {
@@ -61,21 +63,11 @@
             z-index: 1000;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            white-space: nowrap;
-            overflow-x: auto;
-            overflow-y: visible;
-            gap: 1.5rem;
             box-sizing: border-box;
             width: 100%;
-        }
-
-        header::-webkit-scrollbar {
-            height: 4px;
-        }
-
-        header::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 4px;
+            /* Removed internal horizontal scroll conflicts */
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         [data-theme="dark"] header {
@@ -96,7 +88,7 @@
             display: flex;
             align-items: center;
             gap: 0.85rem;
-            flex-shrink: 0;
+            flex-wrap: wrap;
         }
 
         /* macOS Native Style Segmented Control Group */
@@ -618,7 +610,7 @@
             document.documentElement.setAttribute('data-theme', themeCheckbox.checked ? 'dark' : 'light');
         });
 
-        // Dynamic Filtering Logic from the first code preference
+        // Dynamic Filtering Logic
         document.querySelectorAll('input[type="checkbox"]').forEach(input => {
             if (input.id !== 'themeToggleCheckbox') {
                 input.addEventListener('change', filterCards);
