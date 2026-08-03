@@ -1,1 +1,2 @@
-https://luckmagnet.github.io/dnshub
+**DNS Filters Directory**
+--
