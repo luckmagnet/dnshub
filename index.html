@@ -15,9 +15,9 @@
             --accent-rgb: 0, 102, 204;
             --badge-bg: rgba(0, 102, 204, 0.08);
             --shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 16px;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
         }
 
         [data-theme="dark"] {
@@ -45,35 +45,29 @@
         }
 
         header {
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(255, 255, 255, 0.85);
             border-bottom: 1px solid var(--border-color);
-            padding: 1rem 2rem;
+            padding: 0.75rem 1.5rem;
             display: flex;
-            flex-direction: column;
-            gap: 1rem;
+            justify-content: space-between;
+            align-items: center;
             position: sticky;
             top: 0;
             z-index: 100;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
+            white-space: nowrap;
+            overflow-x: auto;
+            gap: 1.5rem;
         }
 
         [data-theme="dark"] header {
-            background-color: rgba(28, 28, 30, 0.8);
-        }
-
-        @media (min-width: 1200px) {
-            header {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-            }
+            background-color: rgba(28, 28, 30, 0.85);
         }
 
         .header-left h1 {
             margin: 0;
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             font-weight: 600;
             display: flex;
             align-items: center;
@@ -84,65 +78,124 @@
         .header-right {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
+            gap: 1rem;
+            flex-shrink: 0;
         }
 
         .controls-group {
             display: flex;
-            gap: 0.4rem;
-            flex-wrap: wrap;
+            gap: 0.25rem;
             align-items: center;
             background: var(--bg-main);
-            padding: 4px;
+            padding: 3px;
             border-radius: var(--radius-md);
             border: 1px solid var(--border-color);
         }
 
-        .control-label, .theme-btn {
+        .control-label, .theme-btn, .macos-popover-btn {
             background: transparent;
             border: none;
             color: var(--text-muted);
-            padding: 0.35rem 0.75rem;
+            padding: 0.3rem 0.65rem;
             border-radius: var(--radius-sm);
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 500;
             transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
             user-select: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
 
-        .control-label:hover {
+        .control-label:hover, .macos-popover-btn:hover {
             color: var(--text-main);
             background: rgba(var(--accent-rgb), 0.05);
         }
 
-        /* macOS-style Segregate Checkbox Selection System */
         input[type="checkbox"] {
             display: none;
         }
 
-        /* Category active states with natural, balanced colors */
-        #cat-ads:checked ~ header label[for="cat-ads"],
-        #cat-security:checked ~ header label[for="cat-security"],
-        #cat-privacy:checked ~ header label[for="cat-privacy"],
-        #cat-whitelist:checked ~ header label[for="cat-whitelist"],
-        #cat-multi:checked ~ header label[for="cat-multi"],
-        #stance-unyielding:checked ~ header label[for="stance-unyielding"],
-        #stance-harmonious:checked ~ header label[for="stance-harmonious"],
-        #stance-steadfast:checked ~ header label[for="stance-steadfast"],
-        #sw-adguard:checked ~ header label[for="sw-adguard"],
-        #sw-pihole:checked ~ header label[for="sw-pihole"],
-        #sw-ublock:checked ~ header label[for="sw-ublock"],
-        #sw-controld:checked ~ header label[for="sw-controld"] {
+        /* macOS Segmented Button Active State */
+        input[type="checkbox"]:checked + label {
             background: var(--bg-card);
             color: var(--text-main);
             font-weight: 600;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0,0,0,0.04);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0,0,0,0.04);
         }
 
-        [data-theme="dark"] input:checked ~ header label {
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255,255,255,0.08);
+        [data-theme="dark"] input[type="checkbox"]:checked + label {
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255,255,255,0.1);
+        }
+
+        /* macOS Popover Menu System */
+        .macos-popover-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .macos-popover-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 6px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            min-width: 170px;
+            display: none;
+            z-index: 1000;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+        }
+
+        [data-theme="dark"] .macos-popover-menu {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .macos-popover-menu.open {
+            display: block;
+            animation: popoverFadeIn 0.15s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        @keyframes popoverFadeIn {
+            from { opacity: 0; transform: translateY(-4px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .popover-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 0.78rem;
+            cursor: pointer;
+            color: var(--text-main);
+            font-weight: 400;
+            user-select: none;
+            transition: background 0.1s;
+        }
+
+        .popover-item:hover {
+            background: var(--accent);
+            color: #ffffff;
+        }
+
+        .popover-item input[type="checkbox"] {
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .popover-item .checkmark {
+            opacity: 0;
+            font-size: 0.7rem;
+        }
+
+        .popover-item.selected .checkmark {
+            opacity: 1;
         }
 
         main {
@@ -202,7 +255,6 @@
             letter-spacing: -0.01em;
         }
 
-        /* Natural, harmonized soft badge tones (avoiding excessive saturated red/green) */
         .badge-unyielding { background: rgba(175, 82, 222, 0.12); color: #af52de; }
         .badge-harmonious { background: rgba(48, 176, 199, 0.12); color: #30b0c7; }
         .badge-steadfast { background: rgba(90, 200, 250, 0.12); color: #5ac8fa; }
@@ -281,7 +333,7 @@
             background: var(--bg-main);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-sm);
-            padding: 0.4rem 0.6rem;
+            padding: 0.35rem 0.55rem;
         }
 
         .theme-icon-light { display: inline; }
@@ -289,7 +341,6 @@
         [data-theme="dark"] .theme-icon-light { display: none; }
         [data-theme="dark"] .theme-icon-dark { display: inline; }
 
-        /* Dynamic multi-filtering CSS engine managed via script / state selectors */
         .card.hidden {
             display: none !important;
         }
@@ -297,55 +348,82 @@
 </head>
 <body>
 
-    <!-- Multi-Select Category Filters -->
-    <input type="checkbox" id="cat-ads" class="filter-input" data-group="category" value="Ads">
-    <input type="checkbox" id="cat-security" class="filter-input" data-group="category" value="Security">
-    <input type="checkbox" id="cat-multi" class="filter-input" data-group="category" value="Multipurpose">
-    <input type="checkbox" id="cat-privacy" class="filter-input" data-group="category" value="Privacy">
-    <input type="checkbox" id="cat-whitelist" class="filter-input" data-group="category" value="Whitelist">
-
-    <!-- Multi-Select Stance Filters -->
-    <input type="checkbox" id="stance-unyielding" class="filter-input" data-group="stance" value="Unyielding">
-    <input type="checkbox" id="stance-harmonious" class="filter-input" data-group="stance" value="Harmonious">
-    <input type="checkbox" id="stance-steadfast" class="filter-input" data-group="stance" value="Steadfast">
-
-    <!-- Multi-Select Software Used Filters -->
-    <input type="checkbox" id="sw-adguard" class="filter-input" data-group="software" value="AdGuard">
-    <input type="checkbox" id="sw-pihole" class="filter-input" data-group="software" value="Pi-hole">
-    <input type="checkbox" id="sw-ublock" class="filter-input" data-group="software" value="uBlock">
-    <input type="checkbox" id="sw-controld" class="filter-input" data-group="software" value="Control D">
-
     <header>
         <div class="header-left">
             <h1>🛡️ DNS Filters Hub</h1>
         </div>
         
         <div class="header-right">
-            <!-- Categories -->
+            <!-- Categories Multi-Select -->
             <div class="controls-group">
                 <span style="font-size: 0.75rem; color: var(--text-muted); margin-left: 4px;">Category:</span>
-                <label for="cat-ads" class="control-label">Ads</label>
-                <label for="cat-security" class="control-label">Security</label>
-                <label for="cat-privacy" class="control-label">Privacy</label>
-                <label for="cat-whitelist" class="control-label">Whitelist</label>
-                <label for="cat-multi" class="control-label">Multi</label>
+                <div>
+                    <input type="checkbox" id="cat-ads" class="filter-input" data-group="category" value="Ads">
+                    <label for="cat-ads" class="control-label">Ads</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="cat-security" class="filter-input" data-group="category" value="Security">
+                    <label for="cat-security" class="control-label">Security</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="cat-privacy" class="filter-input" data-group="category" value="Privacy">
+                    <label for="cat-privacy" class="control-label">Privacy</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="cat-whitelist" class="filter-input" data-group="category" value="Whitelist">
+                    <label for="cat-whitelist" class="control-label">Whitelist</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="cat-multi" class="filter-input" data-group="category" value="Multipurpose">
+                    <label for="cat-multi" class="control-label">Multi</label>
+                </div>
             </div>
 
-            <!-- Stance -->
+            <!-- Stance Multi-Select -->
             <div class="controls-group">
                 <span style="font-size: 0.75rem; color: var(--text-muted); margin-left: 4px;">Stance:</span>
-                <label for="stance-unyielding" class="control-label">Unyielding</label>
-                <label for="stance-harmonious" class="control-label">Harmonious</label>
-                <label for="stance-steadfast" class="control-label">Steadfast</label>
+                <div>
+                    <input type="checkbox" id="stance-unyielding" class="filter-input" data-group="stance" value="Unyielding">
+                    <label for="stance-unyielding" class="control-label">Unyielding</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="stance-harmonious" class="filter-input" data-group="stance" value="Harmonious">
+                    <label for="stance-harmonious" class="control-label">Harmonious</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="stance-steadfast" class="filter-input" data-group="stance" value="Steadfast">
+                    <label for="stance-steadfast" class="control-label">Steadfast</label>
+                </div>
             </div>
 
-            <!-- Software Used -->
-            <div class="controls-group">
-                <span style="font-size: 0.75rem; color: var(--text-muted); margin-left: 4px;">Software:</span>
-                <label for="sw-adguard" class="control-label">AdGuard</label>
-                <label for="sw-pihole" class="control-label">Pi-hole</label>
-                <label for="sw-ublock" class="control-label">uBlock</label>
-                <label for="sw-controld" class="control-label">Control D</label>
+            <!-- Software Used Popover (macOS Style) -->
+            <div class="macos-popover-container">
+                <button class="macos-popover-btn" id="softwarePopoverBtn">
+                    <span>Software</span>
+                    <span style="font-size: 0.6rem;">▼</span>
+                </button>
+                <div class="macos-popover-menu" id="softwarePopoverMenu">
+                    <div class="popover-item" data-value="AdGuard">
+                        <span>AdGuard</span>
+                        <input type="checkbox" class="filter-input-popover" data-group="software" value="AdGuard" style="display:none;">
+                        <span class="checkmark">✓</span>
+                    </div>
+                    <div class="popover-item" data-value="Pi-hole">
+                        <span>Pi-hole</span>
+                        <input type="checkbox" class="filter-input-popover" data-group="software" value="Pi-hole" style="display:none;">
+                        <span class="checkmark">✓</span>
+                    </div>
+                    <div class="popover-item" data-value="uBlock">
+                        <span>uBlock</span>
+                        <input type="checkbox" class="filter-input-popover" data-group="software" value="uBlock" style="display:none;">
+                        <span class="checkmark">✓</span>
+                    </div>
+                    <div class="popover-item" data-value="Control D">
+                        <span>Control D</span>
+                        <input type="checkbox" class="filter-input-popover" data-group="software" value="Control D" style="display:none;">
+                        <span class="checkmark">✓</span>
+                    </div>
+                </div>
             </div>
             
             <!-- Theme Toggle -->
@@ -522,8 +600,38 @@
             htmlElement.setAttribute('data-theme', newTheme);
         });
 
-        // Multi-select filtering engine logic
-        const checkboxes = document.querySelectorAll('.filter-input');
+        // macOS Popover toggle logic
+        const popoverBtn = document.getElementById('softwarePopoverBtn');
+        const popoverMenu = document.getElementById('softwarePopoverMenu');
+
+        popoverBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            popoverMenu.classList.toggle('open');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!popoverMenu.contains(e.target) && !popoverBtn.contains(e.target)) {
+                popoverMenu.classList.remove('open');
+            }
+        });
+
+        // Popover item selection engine
+        const popoverItems = document.querySelectorAll('.popover-item');
+        popoverItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const checkbox = item.querySelector('input[type="checkbox"]');
+                checkbox.checked = !checkbox.checked;
+                if (checkbox.checked) {
+                    item.classList.add('selected');
+                } else {
+                    item.classList.remove('selected');
+                }
+                filterCards();
+            });
+        });
+
+        // Filtering engine logic
+        const filterCheckboxes = document.querySelectorAll('.filter-input');
         const cards = document.querySelectorAll('.card');
 
         function filterCards() {
@@ -548,7 +656,7 @@
             });
         }
 
-        checkboxes.forEach(cb => {
+        filterCheckboxes.forEach(cb => {
             cb.addEventListener('change', filterCards);
         });
     </script>
