@@ -34,7 +34,6 @@
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
         }
 
-        /* Prevent double scrollbars by letting html handle scrolling purely */
         html {
             overflow-y: scroll;
             overflow-x: hidden;
@@ -65,7 +64,6 @@
             -webkit-backdrop-filter: blur(20px);
             box-sizing: border-box;
             width: 100%;
-            /* Removed internal horizontal scroll conflicts */
             flex-wrap: wrap;
             gap: 1rem;
         }
@@ -526,8 +524,8 @@
 
     <main>
         <div class="grid" id="cardGrid">
-            <!-- Item 1 -->
-            <div class="card" data-cat="Ads" data-stance="Unyielding" data-software="AdGuard, Pi-hole, Control D">
+            <!-- Item 1: OISD Big -->
+            <div class="card" data-cat="ads multi" data-stance="unyielding" data-software="adguard pi-hole controld">
                 <div>
                     <div class="card-header">
                         <div class="badges">
@@ -541,8 +539,8 @@
                 </div>
                 <div>
                     <div class="card-links">
-                        <a href="https://oisd.nl" target="_blank">🏠 Homepage</a>
-                        <a href="https://github.com/sjhuttoe/oisd-issues" target="_blank">🐛 Issues</a>
+                        <a href="https://oisd.nl" target="_blank">🏠 OISD Home</a>
+                        <a href="https://github.com/sjhuttoe/oisd-issues" target="_blank">🐛 OISD Issues</a>
                     </div>
                     <div class="card-footer">
                         <a href="https://big.oisd.nl" target="_blank" class="url-display">https://big.oisd.nl</a>
@@ -551,8 +549,8 @@
                 </div>
             </div>
 
-            <!-- Item 2 -->
-            <div class="card" data-cat="Security" data-stance="Unyielding" data-software="AdGuard, Pi-hole, uBlock, Control D">
+            <!-- Item 2: Phishing Army -->
+            <div class="card" data-cat="security" data-stance="unyielding" data-software="adguard pi-hole ublock controld">
                 <div>
                     <div class="card-header">
                         <div class="badges">
@@ -566,8 +564,8 @@
                 </div>
                 <div>
                     <div class="card-links">
-                        <a href="https://phishing.army" target="_blank">🏠 Homepage</a>
-                        <a href="https://github.com/Phishing-Army/submision" target="_blank">🐛 Issues</a>
+                        <a href="https://phishing.army" target="_blank">🏠 Phishing Army Home</a>
+                        <a href="https://github.com/Phishing-Army/submision" target="_blank">🐛 Phishing Army Issues</a>
                     </div>
                     <div class="card-footer">
                         <a href="https://phishing.army/download/phishing_army_blocklist_domains.txt" target="_blank" class="url-display">phishing.army/domains.txt</a>
@@ -576,8 +574,8 @@
                 </div>
             </div>
 
-            <!-- Item 3 -->
-            <div class="card" data-cat="Multipurpose" data-stance="Harmonious" data-software="AdGuard, Pi-hole">
+            <!-- Item 3: Hagezi Multi PRO -->
+            <div class="card" data-cat="multi ads privacy" data-stance="harmonious" data-software="adguard pi-hole controld">
                 <div>
                     <div class="card-header">
                         <div class="badges">
@@ -591,8 +589,8 @@
                 </div>
                 <div>
                     <div class="card-links">
-                        <a href="https://github.com/hagezi/dns-blocklists" target="_blank">🏠 Homepage</a>
-                        <a href="https://github.com/hagezi/dns-blocklists/issues" target="_blank">🐛 Issues</a>
+                        <a href="https://github.com/hagezi/dns-blocklists" target="_blank">🏠 Hagezi Home</a>
+                        <a href="https://github.com/hagezi/dns-blocklists/issues" target="_blank">🐛 Hagezi Issues</a>
                     </div>
                     <div class="card-footer">
                         <a href="https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/pro.txt" target="_blank" class="url-display">hagezi/pro.txt</a>
@@ -610,7 +608,7 @@
             document.documentElement.setAttribute('data-theme', themeCheckbox.checked ? 'dark' : 'light');
         });
 
-        // Dynamic Filtering Logic
+        // Fixed Dynamic Filtering Logic matching exact attributes
         document.querySelectorAll('input[type="checkbox"]').forEach(input => {
             if (input.id !== 'themeToggleCheckbox') {
                 input.addEventListener('change', filterCards);
@@ -623,9 +621,13 @@
             const activeSoftware = Array.from(document.querySelectorAll('.macos-popover-menu input:checked')).map(i => i.id.replace('sw-', ''));
 
             document.querySelectorAll('.card').forEach(card => {
-                const matchesCat = activeCats.length === 0 || activeCats.some(c => card.dataset.cat.toLowerCase().includes(c));
-                const matchesStance = activeStances.length === 0 || activeStances.some(st => card.dataset.stance.toLowerCase().includes(st));
-                const matchesSw = activeSoftware.length === 0 || activeSoftware.some(s => card.dataset.software.toLowerCase().includes(s));
+                const cardCats = card.dataset.cat.split(' ');
+                const cardStance = card.dataset.stance;
+                const cardSoftware = card.dataset.software.split(' ');
+
+                const matchesCat = activeCats.length === 0 || activeCats.some(c => cardCats.includes(c));
+                const matchesStance = activeStances.length === 0 || activeStances.some(st => cardStance === st);
+                const matchesSw = activeSoftware.length === 0 || activeSoftware.some(s => cardSoftware.includes(s));
 
                 card.style.display = (matchesCat && matchesStance && matchesSw) ? 'flex' : 'none';
             });
