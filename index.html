@@ -19,21 +19,22 @@
 
         /* 1. FORCE EXACTLY ONE PAGE SCROLLBAR */
         html {
-            overflow-y: scroll; /* Only standard main window scroll */
+            overflow-y: scroll;
             overflow-x: hidden;
         }
 
         body {
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
             background-color: var(--bg-main);
             color: var(--text-main);
+            -webkit-font-smoothing: antialiased;
         }
 
         /* 2. HEADER: NO SCROLLBAR INTERFERENCE */
         header {
-            background-color: rgba(255, 255, 255, 0.85);
+            background-color: rgba(255, 255, 255, 0.82);
             border-bottom: 1px solid var(--border-color);
             padding: 0.65rem 1.5rem;
             display: flex;
@@ -44,51 +45,71 @@
             z-index: 1000;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            /* Removed overflow-x to avoid dual-axis calculation conflicts */
             overflow: visible; 
             box-sizing: border-box;
             width: 100%;
         }
 
+        header h3 {
+            margin: 0;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
         .header-right {
             display: flex;
             align-items: center;
-            gap: 0.85rem;
-            flex-wrap: wrap; /* Wraps neatly on small screens instead of creating header scrollbars */
+            gap: 0.75rem;
+            flex-wrap: wrap;
         }
 
+        /* macOS Segmented Control Styling */
         .macos-segmented-control {
             display: inline-flex;
-            background: rgba(120, 120, 128, 0.12);
+            background: rgba(118, 118, 128, 0.12);
             padding: 2px;
             border-radius: var(--radius-md);
             gap: 2px;
         }
 
-        .segmented-item input { position: absolute; opacity: 0; }
+        .segmented-item {
+            position: relative;
+        }
+
+        .segmented-item input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
         .segmented-item label {
             display: inline-block;
-            padding: 0.25rem 0.6rem;
+            padding: 0.3rem 0.65rem;
             font-size: 0.76rem;
             font-weight: 500;
             cursor: pointer;
             border-radius: 6px;
+            color: var(--text-main);
+            transition: all 0.15s ease;
+            user-select: none;
         }
 
         .segmented-item input:checked + label {
             background: var(--bg-card);
             font-weight: 600;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            color: var(--text-main);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 0.5px 1px rgba(0, 0, 0, 0.04);
         }
 
-        /* 3. PURE CSS NO-JS POPOVER (NO OVERFLOW BREAKAGE) */
+        /* 3. PURE CSS NO-JS POPOVER */
         .popover-wrapper {
             position: relative;
             display: inline-block;
         }
 
         .popover-btn {
-            background: rgba(120, 120, 128, 0.12);
+            background: rgba(118, 118, 128, 0.12);
             border: none;
             padding: 0.35rem 0.75rem;
             border-radius: var(--radius-md);
@@ -96,6 +117,15 @@
             font-weight: 500;
             cursor: pointer;
             color: var(--text-main);
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: background 0.15s ease;
+        }
+
+        .popover-btn:hover {
+            background: rgba(118, 118, 128, 0.18);
         }
 
         .popover-content {
@@ -107,10 +137,16 @@
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
-            padding: 8px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-            min-width: 160px;
+            padding: 6px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.04);
+            min-width: 170px;
             z-index: 2000;
+            animation: popoverFade 0.15s ease;
+        }
+
+        @keyframes popoverFade {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Open popover when wrapper or button is focused/clicked */
@@ -126,15 +162,61 @@
             font-size: 0.78rem;
             cursor: pointer;
             border-radius: 4px;
+            user-select: none;
+            color: var(--text-main);
         }
 
-        .popover-item:hover { background: rgba(0, 102, 204, 0.08); }
+        .popover-item:hover {
+            background: var(--accent);
+            color: #ffffff;
+        }
 
-        /* CSS Filtering */
-        main { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
-        .card { background: var(--bg-card); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: var(--radius-lg); }
-        
+        .popover-item input[type="checkbox"] {
+            accent-color: var(--accent);
+            cursor: pointer;
+        }
+
+        /* CSS Filtering Logic */
+        main {
+            max-width: 1100px;
+            margin: 2.5rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 1.25rem;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .card h4 {
+            margin: 0 0 0.5rem 0;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .card p {
+            margin: 0;
+            font-size: 0.83rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Dynamic Filtering Rules */
         body:has(#cat-ads:checked) .card:not([data-cat*="Ads"]),
         body:has(#cat-security:checked) .card:not([data-cat*="Security"]),
         body:has(#sw-adguard:checked) .card:not([data-software*="AdGuard"]) {
@@ -145,10 +227,10 @@
 <body>
 
     <header>
-        <h3>🛡️ DNS Hub</h3>
+        <h3>🛡️ DNS Filters Hub</h3>
         
         <div class="header-right">
-            <!-- Filter 1 -->
+            <!-- Filter Categories -->
             <div class="macos-segmented-control">
                 <div class="segmented-item">
                     <input type="checkbox" id="cat-ads">
@@ -160,9 +242,9 @@
                 </div>
             </div>
 
-            <!-- CSS No-JS Popover -->
-            <div class="popover-wrapper">
-                <button class="popover-btn">Software ▼</button>
+            <!-- CSS No-JS Popover Menu -->
+            <div class="popover-wrapper" tabindex="0">
+                <button class="popover-btn" type="button">Software ▾</button>
                 <div class="popover-content">
                     <label class="popover-item">
                         <span>AdGuard</span>
@@ -176,12 +258,12 @@
     <main>
         <div class="grid">
             <div class="card" data-cat="Ads" data-software="AdGuard">
-                <h4>AdGuard Base</h4>
-                <p>Blocks ads and tracking servers.</p>
+                <h4>AdGuard Base Filter</h4>
+                <p>Comprehensive protection blocking aggressive ads, analytical trackers, and telemetry services across applications.</p>
             </div>
             <div class="card" data-cat="Security" data-software="Pi-hole">
                 <h4>Phishing Protection</h4>
-                <p>Blocks malicious phishing attempts.</p>
+                <p>Advanced security list designed to intercept and isolate known malicious phishing attempts and deceptive domains.</p>
             </div>
         </div>
     </main>
