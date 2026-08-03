@@ -201,7 +201,9 @@
             border-radius: var(--radius-md);
             padding: 6px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            min-width: 170px;
+            min-width: 200px;
+            max-height: 250px;
+            overflow-y: auto;
             display: none;
             z-index: 99999;
             backdrop-filter: blur(25px);
@@ -437,18 +439,41 @@
         [data-theme="dark"] .theme-icon-dark { display: inline; }
 
         /* Pure CSS Native-Fallback Filtering Engine */
-        body:has(#cat-ads:checked) .card:not([data-cat~="ads"]),
-        body:has(#cat-security:checked) .card:not([data-cat~="security"]),
-        body:has(#cat-privacy:checked) .card:not([data-cat~="privacy"]),
-        body:has(#cat-whitelist:checked) .card:not([data-cat~="whitelist"]),
-        body:has(#cat-multi:checked) .card:not([data-cat~="multi"]),
+        body:has(#cat-ads:checked) .card:not([data-cat*="ads"]),
+        body:has(#cat-security:checked) .card:not([data-cat*="security"]),
+        body:has(#cat-privacy:checked) .card:not([data-cat*="privacy"]),
+        body:has(#cat-whitelist:checked) .card:not([data-cat*="whitelist"]),
+        body:has(#cat-multi:checked) .card:not([data-cat*="multi"]),
         body:has(#stance-unyielding:checked) .card:not([data-stance="unyielding"]),
         body:has(#stance-harmonious:checked) .card:not([data-stance="harmonious"]),
         body:has(#stance-steadfast:checked) .card:not([data-stance="steadfast"]),
-        body:has(#sw-adguard:checked) .card:not([data-software*="adguard"]),
         body:has(#sw-pihole:checked) .card:not([data-software*="pi-hole"]),
-        body:has(#sw-ublock:checked) .card:not([data-software*="ublock"]),
-        body:has(#sw-controld:checked) .card:not([data-software*="controld"]) {
+        body:has(#sw-adguard:checked) .card:not([data-software*="adguard"]),
+        body:has(#sw-adguardhome:checked) .card:not([data-software*="adguard-home"]),
+        body:has(#sw-eblocker:checked) .card:not([data-software*="eblocker"]),
+        body:has(#sw-ublock:checked) .card:not([data-software*="ublock-origin"]),
+        body:has(#sw-brave:checked) .card:not([data-software*="brave"]),
+        body:has(#sw-adnauseam:checked) .card:not([data-software*="adnauseam"]),
+        body:has(#sw-littlesnitch:checked) .card:not([data-software*="little-snitch"]),
+        body:has(#sw-dnsmasq:checked) .card:not([data-software*="dnsmasq"]),
+        body:has(#sw-diversion:checked) .card:not([data-software*="diversion"]),
+        body:has(#sw-blocky:checked) .card:not([data-software*="blocky"]),
+        body:has(#sw-nebulo:checked) .card:not([data-software*="nebulo"]),
+        body:has(#sw-netduma:checked) .card:not([data-software*="netduma"]),
+        body:has(#sw-opnsense:checked) .card:not([data-software*="opnsense"]),
+        body:has(#sw-yoga-dns:checked) .card:not([data-software*="yoga-dns"]),
+        body:has(#sw-dnscloak:checked) .card:not([data-software*="dnscloak"]),
+        body:has(#sw-dnscrypt:checked) .card:not([data-software*="dnscrypt"]),
+        body:has(#sw-fritzbox:checked) .card:not([data-software*="fritzbox"]),
+        body:has(#sw-technitium:checked) .card:not([data-software*="technitium"]),
+        body:has(#sw-adblocklean:checked) .card:not([data-software*="adblock-lean"]),
+        body:has(#sw-personaldnsfilter:checked) .card:not([data-software*="personal-dnsfilter"]),
+        body:has(#sw-invizible:checked) .card:not([data-software*="invizible"]),
+        body:has(#sw-rpz:checked) .card:not([data-software*="rpz"]),
+        body:has(#sw-bind:checked) .card:not([data-software*="bind"]),
+        body:has(#sw-knot:checked) .card:not([data-software*="knot"]),
+        body:has(#sw-powerdns:checked) .card:not([data-software*="powerdns"]),
+        body:has(#sw-unbound:checked) .card:not([data-software*="unbound"]) {
             display: none;
         }
     </style>
@@ -514,26 +539,33 @@
                     <span style="font-size: 0.6rem;">▼</span>
                 </label>
                 <div class="macos-popover-menu">
-                    <label class="popover-item">
-                        <span>AdGuard</span>
-                        <input type="checkbox" id="sw-adguard">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="popover-item">
-                        <span>Pi-hole</span>
-                        <input type="checkbox" id="sw-pihole">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="popover-item">
-                        <span>uBlock</span>
-                        <input type="checkbox" id="sw-ublock">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="popover-item">
-                        <span>Control D</span>
-                        <input type="checkbox" id="sw-controld">
-                        <span class="checkmark"></span>
-                    </label>
+                    <label class="popover-item"><span>Pi-hole</span><input type="checkbox" id="sw-pihole"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>AdGuard</span><input type="checkbox" id="sw-adguard"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>AdGuard Home</span><input type="checkbox" id="sw-adguardhome"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>eBlocker</span><input type="checkbox" id="sw-eblocker"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>uBlock Origin</span><input type="checkbox" id="sw-ublock"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>Brave (Aggressive)</span><input type="checkbox" id="sw-brave"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>AdNauseam</span><input type="checkbox" id="sw-adnauseam"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>Little Snitch Mini</span><input type="checkbox" id="sw-littlesnitch"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>DNSMasq (v2.86+)</span><input type="checkbox" id="sw-dnsmasq"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>Diversion (v5+)</span><input type="checkbox" id="sw-diversion"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>Blocky (v0.23+)</span><input type="checkbox" id="sw-blocky"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>Nebulo</span><input type="checkbox" id="sw-nebulo"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>NetDuma</span><input type="checkbox" id="sw-netduma"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>OPNsense</span><input type="checkbox" id="sw-opnsense"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>YogaDNS</span><input type="checkbox" id="sw-yoga-dns"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>DNSCloak</span><input type="checkbox" id="sw-dnscloak"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>DNSCrypt</span><input type="checkbox" id="sw-dnscrypt"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>FRITZ!Box (OS >= 8.40)</span><input type="checkbox" id="sw-fritzbox"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>Technitium DNS</span><input type="checkbox" id="sw-technitium"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>adblock-lean</span><input type="checkbox" id="sw-adblocklean"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>PersonalDNSfilter</span><input type="checkbox" id="sw-personaldnsfilter"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>InviZible Pro</span><input type="checkbox" id="sw-invizible"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>RPZ (Bind/Knot/PowerDNS)</span><input type="checkbox" id="sw-rpz"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>Bind</span><input type="checkbox" id="sw-bind"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>Knot</span><input type="checkbox" id="sw-knot"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>PowerDNS</span><input type="checkbox" id="sw-powerdns"><span class="checkmark"></span></label>
+                    <label class="popover-item"><span>Unbound</span><input type="checkbox" id="sw-unbound"><span class="checkmark"></span></label>
                 </div>
             </div>
 
@@ -549,7 +581,7 @@
     <main>
         <div class="grid" id="cardGrid">
             <!-- Item 1: OISD Big -->
-            <div class="card" data-cat="ads multi" data-stance="unyielding" data-software="adguard pi-hole controld">
+            <div class="card" data-cat="ads multi" data-stance="unyielding" data-software="pi-hole adguard adguard-home eblocker ublock-origin brave adnauseam little-snitch dnsmasq diversion blocky nebulo netduma opnsense yoga-dns dnscloak dnscrypt fritzbox technitium adblock-lean personal-dnsfilter invizible rpz bind knot powerdns unbound">
                 <div>
                     <div class="card-header">
                         <div class="badges">
@@ -574,7 +606,7 @@
             </div>
 
             <!-- Item 2: Phishing Army -->
-            <div class="card" data-cat="security" data-stance="unyielding" data-software="adguard pi-hole ublock controld">
+            <div class="card" data-cat="security" data-stance="unyielding" data-software="pi-hole adguard adguard-home eblocker ublock-origin brave adnauseam little-snitch dnsmasq diversion blocky nebulo netduma opnsense yoga-dns dnscloak dnscrypt fritzbox technitium adblock-lean personal-dnsfilter invizible rpz bind knot powerdns unbound">
                 <div>
                     <div class="card-header">
                         <div class="badges">
@@ -599,7 +631,7 @@
             </div>
 
             <!-- Item 3: Hagezi Multi PRO -->
-            <div class="card" data-cat="multi ads privacy" data-stance="harmonious" data-software="adguard pi-hole controld">
+            <div class="card" data-cat="multi ads privacy" data-stance="harmonious" data-software="pi-hole adguard adguard-home eblocker ublock-origin brave adnauseam little-snitch dnsmasq diversion blocky nebulo netduma opnsense yoga-dns dnscloak dnscrypt fritzbox technitium adblock-lean personal-dnsfilter invizible rpz bind knot powerdns unbound">
                 <div>
                     <div class="card-header">
                         <div class="badges">
@@ -619,6 +651,306 @@
                     <div class="card-footer">
                         <a href="https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/pro.txt" target="_blank" class="url-display">hagezi/pro.txt</a>
                         <code class="copy-box" onclick="navigator.clipboard.writeText('https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/pro.txt')">Copy</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 4: AdGuard Base Filter -->
+            <div class="card" data-cat="ads" data-stance="harmonious" data-software="adguard adguard-home ublock-origin brave adnauseam">
+                <div>
+                    <div class="card-header">
+                        <div class="badges">
+                            <span class="badge">Ads</span>
+                            <span class="badge badge-harmonious">Harmonious</span>
+                        </div>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">🌿 Balanced Flow</span>
+                    </div>
+                    <h3>AdGuard Base Filter</h3>
+                    <p>The core general ad-blocking list compiled by AdGuard, blocking annoying banners, popups, and intrusive video advertising.</p>
+                </div>
+                <div>
+                    <div class="card-links">
+                        <a href="https://adguard.com" target="_blank">🏠 Homepage</a>
+                        <a href="https://github.com/AdguardTeam/AdguardFilters" target="_blank">🐛 Issues</a>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://filters.adguard.com/extension/ublock/filters/2_optimized.txt" target="_blank" class="url-display">adguard.com/filters/2.txt</a>
+                        <code class="copy-box" onclick="navigator.clipboard.writeText('https://filters.adguard.com/extension/ublock/filters/2_optimized.txt')">Copy</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 5: StevenBlack Hosts -->
+            <div class="card" data-cat="ads privacy multi" data-stance="steadfast" data-software="pi-hole adguard adguard-home dnsmasq blocky opnsense">
+                <div>
+                    <div class="card-header">
+                        <div class="badges">
+                            <span class="badge">Multi</span>
+                            <span class="badge badge-steadfast">Steadfast</span>
+                        </div>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">🛡️ Rock Solid</span>
+                    </div>
+                    <h3>StevenBlack Unified Hosts</h3>
+                    <p>Consolidated and unified hosts file combining multiple well-maintained blocklists targeting adware, malware, and tracking.</p>
+                </div>
+                <div>
+                    <div class="card-links">
+                        <a href="https://github.com/StevenBlack/hosts" target="_blank">🏠 Homepage</a>
+                        <a href="https://github.com/StevenBlack/hosts/issues" target="_blank">🐛 Issues</a>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts" target="_blank" class="url-display">stevenblack/hosts</a>
+                        <code class="copy-box" onclick="navigator.clipboard.writeText('https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts')">Copy</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 6: EasyList -->
+            <div class="card" data-cat="ads" data-stance="unyielding" data-software="adguard adguard-home ublock-origin brave adnauseam">
+                <div>
+                    <div class="card-header">
+                        <div class="badges">
+                            <span class="badge">Ads</span>
+                            <span class="badge badge-unyielding">Unyielding</span>
+                        </div>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">⚡ Strict Guard</span>
+                    </div>
+                    <h3>EasyList</h3>
+                    <p>The industry-standard subscription filter list that completely removes advertisements from web pages, including scripts and banners.</p>
+                </div>
+                <div>
+                    <div class="card-links">
+                        <a href="https://easylist.to" target="_blank">🏠 Homepage</a>
+                        <a href="https://forums.lanik.us" target="_blank">🐛 Issues</a>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://easylist.to/easylist/easylist.txt" target="_blank" class="url-display">easylist.to/easylist.txt</a>
+                        <code class="copy-box" onclick="navigator.clipboard.writeText('https://easylist.to/easylist/easylist.txt')">Copy</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 7: EasyPrivacy -->
+            <div class="card" data-cat="privacy" data-stance="unyielding" data-software="adguard adguard-home ublock-origin brave adnauseam">
+                <div>
+                    <div class="card-header">
+                        <div class="badges">
+                            <span class="badge">Privacy</span>
+                            <span class="badge badge-unyielding">Unyielding</span>
+                        </div>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">⚡ Strict Guard</span>
+                    </div>
+                    <h3>EasyPrivacy</h3>
+                    <p>Comprehensive tracking protection list designed to shield users from web trackers, hidden web beacons, and analytics scripts.</p>
+                </div>
+                <div>
+                    <div class="card-links">
+                        <a href="https://easylist.to" target="_blank">🏠 Homepage</a>
+                        <a href="https://forums.lanik.us" target="_blank">🐛 Issues</a>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://easylist.to/easylist/easyprivacy.txt" target="_blank" class="url-display">easylist.to/easyprivacy.txt</a>
+                        <code class="copy-box" onclick="navigator.clipboard.writeText('https://easylist.to/easylist/easyprivacy.txt')">Copy</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 8: Peter Lowe's Blocklist -->
+            <div class="card" data-cat="ads privacy" data-stance="steadfast" data-software="pi-hole adguard adguard-home dnsmasq blocky opnsense">
+                <div>
+                    <div class="card-header">
+                        <div class="badges">
+                            <span class="badge">Ads</span>
+                            <span class="badge badge-steadfast">Steadfast</span>
+                        </div>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">🛡️ Rock Solid</span>
+                    </div>
+                    <h3>Peter Lowe's AdServer List</h3>
+                    <p>A long-standing, manually maintained blocklist targeting ad servers, web-bug trackers, and privacy-invasive elements.</p>
+                </div>
+                <div>
+                    <div class="card-links">
+                        <a href="https://pgl.yoyo.org/adservers/" target="_blank">🏠 Homepage</a>
+                        <a href="https://pgl.yoyo.org/adservers/contact.php" target="_blank">🐛 Issues</a>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext" target="_blank" class="url-display">pgl.yoyo.org/adservers</a>
+                        <code class="copy-box" onclick="navigator.clipboard.writeText('https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext')">Copy</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 9: URLhaus Malware Blocklist -->
+            <div class="card" data-cat="security" data-stance="unyielding" data-software="pi-hole adguard adguard-home blocky dnsmasq opnsense">
+                <div>
+                    <div class="card-header">
+                        <div class="badges">
+                            <span class="badge">Security</span>
+                            <span class="badge badge-unyielding">Unyielding</span>
+                        </div>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">⚡ Strict Guard</span>
+                    </div>
+                    <h3>URLhaus Malware Sites</h3>
+                    <p>Abuse.ch project tracking malicious domains used for malware distribution, ransomware drops, and command-and-control servers.</p>
+                </div>
+                <div>
+                    <div class="card-links">
+                        <a href="https://urlhaus.abuse.ch" target="_blank">🏠 Homepage</a>
+                        <a href="https://github.com/abusech/URLhaus" target="_blank">🐛 Issues</a>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://urlhaus.abuse.ch/downloads/hostfile/" target="_blank" class="url-display">urlhaus.abuse.ch/hostfile/</a>
+                        <code class="copy-box" onclick="navigator.clipboard.writeText('https://urlhaus.abuse.ch/downloads/hostfile/')">Copy</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 10: AdGuard Security Filter -->
+            <div class="card" data-cat="security" data-stance="harmonious" data-software="adguard adguard-home ublock-origin brave adnauseam">
+                <div>
+                    <div class="card-header">
+                        <div class="badges">
+                            <span class="badge">Security</span>
+                            <span class="badge badge-harmonious">Harmonious</span>
+                        </div>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">🌿 Balanced Flow</span>
+                    </div>
+                    <h3>AdGuard Security Filter</h3>
+                    <p>Specialized filter designed to protect against phishing, malicious websites, deceptive download vectors, and online fraud.</p>
+                </div>
+                <div>
+                    <div class="card-links">
+                        <a href="https://adguard.com" target="_blank">🏠 Homepage</a>
+                        <a href="https://github.com/AdguardTeam/AdguardFilters" target="_blank">🐛 Issues</a>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://filters.adguard.com/extension/ublock/filters/224_optimized.txt" target="_blank" class="url-display">adguard.com/filters/security.txt</a>
+                        <code class="copy-box" onclick="navigator.clipboard.writeText('https://filters.adguard.com/extension/ublock/filters/224_optimized.txt')">Copy</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 11: Firebog Trusted Whitelist -->
+            <div class="card" data-cat="whitelist" data-stance="steadfast" data-software="pi-hole adguard adguard-home blocky">
+                <div>
+                    <div class="card-header">
+                        <div class="badges">
+                            <span class="badge">Whitelist</span>
+                            <span class="badge badge-steadfast">Steadfast</span>
+                        </div>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">🛡️ Rock Solid</span>
+                    </div>
+                    <h3>Firebog Whitelist</h3>
+                    <p>Community-driven ecosystem whitelist list to unblock benign domains frequently flagged falsely by strict ad and telemetry blocklists.</p>
+                </div>
+                <div>
+                    <div class="card-links">
+                        <a href="https://firebog.net" target="_blank">🏠 Homepage</a>
+                        <a href="https://github.com/anudeepND/whitelist" target="_blank">🐛 Issues</a>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt" target="_blank" class="url-display">firebog.net/whitelist.txt</a>
+                        <code class="copy-box" onclick="navigator.clipboard.writeText('https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt')">Copy</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 12: Dan Pollock's Hosts -->
+            <div class="card" data-cat="ads privacy" data-stance="steadfast" data-software="pi-hole adguard adguard-home dnsmasq blocky opnsense">
+                <div>
+                    <div class="card-header">
+                        <div class="badges">
+                            <span class="badge">Privacy</span>
+                            <span class="badge badge-steadfast">Steadfast</span>
+                        </div>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">🛡️ Rock Solid</span>
+                    </div>
+                    <h3>Dan Pollock's Hosts File</h3>
+                    <p>A classic, highly targeted hosts file that stops web ads, trackers, and telemetry collection at the operating system or DNS level.</p>
+                </div>
+                <div>
+                    <div class="card-links">
+                        <a href="https://someonewhocares.org" target="_blank">🏠 Homepage</a>
+                        <a href="https://someonewhocares.org/hosts/feedback/" target="_blank">🐛 Issues</a>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://someonewhocares.org/hosts/zero/hosts" target="_blank" class="url-display">someonewhocares.org/hosts</a>
+                        <code class="copy-box" onclick="navigator.clipboard.writeText('https://someonewhocares.org/hosts/zero/hosts')">Copy</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 13: uBlock Origin Filters -->
+            <div class="card" data-cat="ads multi" data-stance="harmonious" data-software="ublock-origin brave adnauseam">
+                <div>
+                    <div class="card-header">
+                        <div class="badges">
+                            <span class="badge">Multi</span>
+                            <span class="badge badge-harmonious">Harmonious</span>
+                        </div>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">🌿 Balanced Flow</span>
+                    </div>
+                    <h3>uBlock Origin Built-in Filters</h3>
+                    <p>Built-in resource lists optimized specifically for uBlock Origin, offering resource-efficient blocking of popups and widgets.</p>
+                </div>
+                <div>
+                    <div class="card-links">
+                        <a href="https://github.com/gorhill/uBlock" target="_blank">🏠 Homepage</a>
+                        <a href="https://github.com/gorhill/uBlock/issues" target="_blank">🐛 Issues</a>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt" target="_blank" class="url-display">uAssets/filters/filters.txt</a>
+                        <code class="copy-box" onclick="navigator.clipboard.writeText('https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt')">Copy</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 14: Spam404 Blocklist -->
+            <div class="card" data-cat="security" data-stance="unyielding" data-software="pi-hole adguard adguard-home blocky dnsmasq opnsense">
+                <div>
+                    <div class="card-header">
+                        <div class="badges">
+                            <span class="badge">Security</span>
+                            <span class="badge badge-unyielding">Unyielding</span>
+                        </div>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">⚡ Strict Guard</span>
+                    </div>
+                    <h3>Spam404 Security Blocklist</h3>
+                    <p>Aggressive security index protecting users from online scam hubs, credit card harvesting fraud, and fake giveaway traps.</p>
+                </div>
+                <div>
+                    <div class="card-links">
+                        <a href="https://www.spam404.com" target="_blank">🏠 Homepage</a>
+                        <a href="https://github.com/Spam404/lists" target="_blank">🐛 Issues</a>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://raw.githubusercontent.com/Spam404/lists/master/main-blacklist.txt" target="_blank" class="url-display">spam404.com/blacklist.txt</a>
+                        <code class="copy-box" onclick="navigator.clipboard.writeText('https://raw.githubusercontent.com/Spam404/lists/master/main-blacklist.txt')">Copy</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 15: Abuse.ch SSL Blacklist -->
+            <div class="card" data-cat="security" data-stance="unyielding" data-software="pi-hole adguard adguard-home blocky dnsmasq opnsense">
+                <div>
+                    <div class="card-header">
+                        <div class="badges">
+                            <span class="badge">Security</span>
+                            <span class="badge badge-unyielding">Unyielding</span>
+                        </div>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">⚡ Strict Guard</span>
+                    </div>
+                    <h3>Abuse.ch SSLBL Domain List</h3>
+                    <p>Detects and blocks malicious SSL/TLS certificates and botnet command channels operating over encrypted traffic streams.</p>
+                </div>
+                <div>
+                    <div class="card-links">
+                        <a href="https://sslbl.abuse.ch" target="_blank">🏠 Homepage</a>
+                        <a href="https://github.com/abusech" target="_blank">🐛 Issues</a>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://sslbl.abuse.ch/blacklist/sslbl_domain-ple.txt" target="_blank" class="url-display">sslbl.abuse.ch/domains.txt</a>
+                        <code class="copy-box" onclick="navigator.clipboard.writeText('https://sslbl.abuse.ch/blacklist/sslbl_domain-ple.txt')">Copy</code>
                     </div>
                 </div>
             </div>
