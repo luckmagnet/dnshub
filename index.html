@@ -13,11 +13,11 @@
             --text-muted: #86868b;
             --accent: #0066cc;
             --accent-rgb: 0, 102, 204;
-            --badge-bg: rgba(0, 102, 204, 0.08);
-            --badge-text: #0066cc;
+            --badge-bg: rgba(0, 102, 204, 0.1);
+            --badge-text: #0055b3;
             --shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
             --radius-sm: 6px;
-            --radius-md: 10px;
+            --radius-md: 8px;
             --radius-lg: 14px;
         }
 
@@ -29,8 +29,8 @@
             --text-muted: #98989d;
             --accent: #0a84ff;
             --accent-rgb: 10, 132, 255;
-            --badge-bg: rgba(10, 132, 255, 0.2);
-            --badge-text: #4da3ff;
+            --badge-bg: rgba(10, 132, 255, 0.25);
+            --badge-text: #6ea8ff;
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
         }
 
@@ -45,31 +45,28 @@
             line-height: 1.47059;
             font-weight: 400;
             letter-spacing: -0.022em;
-            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         header {
             background-color: rgba(255, 255, 255, 0.85);
             border-bottom: 1px solid var(--border-color);
-            padding: 0.75rem 1.5rem;
+            padding: 0.65rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            position: relative;
+            z-index: 999;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             white-space: nowrap;
             overflow-x: auto;
-            overflow-y: visible; /* Allow popover menu to overflow outside header bounds */
+            overflow-y: visible;
             gap: 1.5rem;
             flex-shrink: 0;
             box-sizing: border-box;
             width: 100%;
         }
 
-        /* Custom scrollbar styling specifically for scrollable header */
         header::-webkit-scrollbar {
             height: 4px;
         }
@@ -95,61 +92,99 @@
         .header-right {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.85rem;
             flex-shrink: 0;
         }
 
-        .controls-group {
-            display: flex;
-            gap: 0.25rem;
-            align-items: center;
-            background: var(--bg-main);
-            padding: 3px;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-color);
-        }
-
-        .control-label, .theme-btn, .macos-popover-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            padding: 0.3rem 0.65rem;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            font-size: 0.78rem;
-            font-weight: 500;
-            transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
-            user-select: none;
+        /* macOS Native Style Segmented Control Group */
+        .macos-segmented-control {
             display: inline-flex;
+            background: rgba(120, 120, 128, 0.12);
+            padding: 2px;
+            border-radius: var(--radius-md);
+            gap: 2px;
             align-items: center;
-            gap: 4px;
         }
 
-        .control-label:hover, .macos-popover-btn:hover {
+        [data-theme="dark"] .macos-segmented-control {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .segmented-item {
+            position: relative;
+        }
+
+        .segmented-item input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .segmented-item label {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            font-size: 0.76rem;
+            font-weight: 400;
             color: var(--text-main);
-            background: rgba(var(--accent-rgb), 0.05);
+            border-radius: 6px;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+            text-align: center;
         }
 
-        input[type="checkbox"] {
-            display: none;
+        .segmented-item label:hover {
+            color: var(--accent);
         }
 
-        /* macOS Segmented Button Active State */
-        input[type="checkbox"]:checked + label {
+        .segmented-item input[type="checkbox"]:checked + label {
             background: var(--bg-card);
             color: var(--text-main);
-            font-weight: 600;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0,0,0,0.04);
+            font-weight: 500;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 0 0 0.5px rgba(0, 0, 0, 0.04);
         }
 
-        [data-theme="dark"] input[type="checkbox"]:checked + label {
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255,255,255,0.1);
+        [data-theme="dark"] .segmented-item input[type="checkbox"]:checked + label {
+            background: #636366;
+            color: #ffffff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .control-group-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-right: 2px;
         }
 
         /* macOS Popover Menu System */
         .macos-popover-container {
             position: relative;
             display: inline-block;
+        }
+
+        .macos-popover-btn {
+            background: rgba(120, 120, 128, 0.12);
+            border: none;
+            color: var(--text-main);
+            padding: 0.3rem 0.7rem;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 0.76rem;
+            font-weight: 400;
+            transition: all 0.15s ease;
+            user-select: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        [data-theme="dark"] .macos-popover-btn {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .macos-popover-btn:hover {
+            background: rgba(120, 120, 128, 0.2);
         }
 
         .macos-popover-menu {
@@ -160,10 +195,10 @@
             border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
             padding: 6px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             min-width: 170px;
             display: none;
-            z-index: 9999;
+            z-index: 99999;
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
         }
@@ -225,7 +260,7 @@
         }
 
         main {
-            height: calc(100vh - 65px);
+            height: calc(100vh - 58px);
             overflow-y: auto;
             box-sizing: border-box;
             max-width: 1400px;
@@ -277,7 +312,7 @@
 
         .badge {
             font-size: 0.7rem;
-            padding: 0.2rem 0.6rem;
+            padding: 0.25rem 0.65rem;
             background: var(--badge-bg);
             color: var(--badge-text);
             border-radius: 20px;
@@ -285,13 +320,13 @@
             letter-spacing: -0.01em;
         }
 
-        .badge-unyielding { background: rgba(175, 82, 222, 0.15); color: #af52de; }
-        .badge-harmonious { background: rgba(48, 176, 199, 0.15); color: #28a0b5; }
-        .badge-steadfast { background: rgba(90, 200, 250, 0.15); color: #0088cc; }
+        .badge-unyielding { background: rgba(175, 82, 222, 0.18); color: #af52de; }
+        .badge-harmonious { background: rgba(48, 176, 199, 0.18); color: #1fb0c7; }
+        .badge-steadfast { background: rgba(90, 200, 250, 0.18); color: #0088cc; }
 
-        [data-theme="dark"] .badge-unyielding { color: #da8fff; }
-        [data-theme="dark"] .badge-harmonious { color: #5bc8dc; }
-        [data-theme="dark"] .badge-steadfast { color: #70d2ff; }
+        [data-theme="dark"] .badge-unyielding { color: #da8fff; background: rgba(175, 82, 222, 0.25); }
+        [data-theme="dark"] .badge-harmonious { color: #5bc8dc; background: rgba(48, 176, 199, 0.25); }
+        [data-theme="dark"] .badge-steadfast { color: #70d2ff; background: rgba(90, 200, 250, 0.25); }
 
         .card h3 {
             margin: 0 0 0.4rem 0;
@@ -317,7 +352,6 @@
             color: var(--accent);
             text-decoration: none;
             font-weight: 600;
-            opacity: 1;
             transition: opacity 0.15s ease;
         }
 
@@ -370,10 +404,17 @@
         }
 
         .theme-btn {
-            background: var(--bg-main);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            padding: 0.35rem 0.55rem;
+            background: rgba(120, 120, 128, 0.12);
+            border: none;
+            color: var(--text-main);
+            border-radius: var(--radius-md);
+            padding: 0.35rem 0.6rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        [data-theme="dark"] .theme-btn {
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .theme-icon-light { display: inline; }
@@ -394,45 +435,49 @@
         </div>
         
         <div class="header-right">
-            <!-- Categories Multi-Select -->
-            <div class="controls-group">
-                <span style="font-size: 0.75rem; color: var(--text-muted); margin-left: 4px;">Category:</span>
-                <div>
-                    <input type="checkbox" id="cat-ads" class="filter-input" data-group="category" value="Ads">
-                    <label for="cat-ads" class="control-label">Ads</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="cat-security" class="filter-input" data-group="category" value="Security">
-                    <label for="cat-security" class="control-label">Security</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="cat-privacy" class="filter-input" data-group="category" value="Privacy">
-                    <label for="cat-privacy" class="control-label">Privacy</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="cat-whitelist" class="filter-input" data-group="category" value="Whitelist">
-                    <label for="cat-whitelist" class="control-label">Whitelist</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="cat-multi" class="filter-input" data-group="category" value="Multipurpose">
-                    <label for="cat-multi" class="control-label">Multi</label>
+            <!-- Categories macOS Segmented Control -->
+            <div style="display: flex; align-items: center; gap: 4px;">
+                <span class="control-group-label">Category:</span>
+                <div class="macos-segmented-control">
+                    <div class="segmented-item">
+                        <input type="checkbox" id="cat-ads" class="filter-input" data-group="category" value="Ads">
+                        <label for="cat-ads">Ads</label>
+                    </div>
+                    <div class="segmented-item">
+                        <input type="checkbox" id="cat-security" class="filter-input" data-group="category" value="Security">
+                        <label for="cat-security">Security</label>
+                    </div>
+                    <div class="segmented-item">
+                        <input type="checkbox" id="cat-privacy" class="filter-input" data-group="category" value="Privacy">
+                        <label for="cat-privacy">Privacy</label>
+                    </div>
+                    <div class="segmented-item">
+                        <input type="checkbox" id="cat-whitelist" class="filter-input" data-group="category" value="Whitelist">
+                        <label for="cat-whitelist">Whitelist</label>
+                    </div>
+                    <div class="segmented-item">
+                        <input type="checkbox" id="cat-multi" class="filter-input" data-group="category" value="Multipurpose">
+                        <label for="cat-multi">Multi</label>
+                    </div>
                 </div>
             </div>
 
-            <!-- Stance Multi-Select -->
-            <div class="controls-group">
-                <span style="font-size: 0.75rem; color: var(--text-muted); margin-left: 4px;">Stance:</span>
-                <div>
-                    <input type="checkbox" id="stance-unyielding" class="filter-input" data-group="stance" value="Unyielding">
-                    <label for="stance-unyielding" class="control-label">Unyielding</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="stance-harmonious" class="filter-input" data-group="stance" value="Harmonious">
-                    <label for="stance-harmonious" class="control-label">Harmonious</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="stance-steadfast" class="filter-input" data-group="stance" value="Steadfast">
-                    <label for="stance-steadfast" class="control-label">Steadfast</label>
+            <!-- Stance macOS Segmented Control -->
+            <div style="display: flex; align-items: center; gap: 4px;">
+                <span class="control-group-label">Stance:</span>
+                <div class="macos-segmented-control">
+                    <div class="segmented-item">
+                        <input type="checkbox" id="stance-unyielding" class="filter-input" data-group="stance" value="Unyielding">
+                        <label for="stance-unyielding">Unyielding</label>
+                    </div>
+                    <div class="segmented-item">
+                        <input type="checkbox" id="stance-harmonious" class="filter-input" data-group="stance" value="Harmonious">
+                        <label for="stance-harmonious">Harmonious</label>
+                    </div>
+                    <div class="segmented-item">
+                        <input type="checkbox" id="stance-steadfast" class="filter-input" data-group="stance" value="Steadfast">
+                        <label for="stance-steadfast">Steadfast</label>
+                    </div>
                 </div>
             </div>
 
@@ -656,7 +701,7 @@
         });
 
         // Popover item selection engine
-        const popoverItems = document.querySelectorAll('.popover-item');
+        const popoverItems = document.querySelectorAll('.macos-popover-menu .popover-item');
         popoverItems.forEach(item => {
             item.addEventListener('click', () => {
                 const checkbox = item.querySelector('input[type="checkbox"]');
