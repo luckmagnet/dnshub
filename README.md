@@ -1,2 +1,2 @@
-**DNS Filters Directory**
+**DNSHub**
 --
