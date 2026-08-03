@@ -1,1 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive DNS Filters Directory (No JS)</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* CSS Trick: Hide filter controls visually while keeping them functional */
+        .filter-control {
+            display: none;
+        }
 
+        /* 1. Category Filtering Logic */
+        /* If 'cat-all' is checked, show everything */
+        #cat-all:checked ~ main .filter-card {
+            display: flex;
+        }
+
+        /* If a specific category is checked, hide cards that don't match */
+        #cat-ads:checked ~ main .filter-card:not([data-category*="Ads"]) { display: none; }
+        #cat-multipurpose:checked ~ main .filter-card:not([data-category*="Multipurpose"]) { display: none; }
+        #cat-security:checked ~ main .filter-card:not([data-category*="Security"]) { display: none; }
+
+        /* Highlight active filter button state */
+        #cat-all:checked ~ header label[for="cat-all"],
+        #cat-ads:checked ~ header label[for="cat-ads"],
+        #cat-multipurpose:checked ~ header label[for="cat-multipurpose"],
+        #cat-security:checked ~ header label[for="cat-security"] {
+            background-color: #0284c7;
+            color: white;
+            border-color: #0284c7;
+        }
+
+        /* 2. Sorting Logic using CSS Order */
+        #sort-name:checked ~ main .filters-grid {
+            order: 1; /* Default DOM order is Alphabetical */
+        }
+        
+        /* Highlight active sort button */
+        #sort-name:checked ~ header label[for="sort-name"] {
+            background-color: #334155;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen font-sans">
+
+    <!-- HIDDEN RADIO BUTTONS FOR STATE MANAGEMENT (No JS) -->
+    <!-- Category State -->
+    <input type="radio" name="category" id="cat-all" class="filter-control" checked>
+    <input type="radio" name="category" id="cat-ads" class="filter-control">
+    <input type="radio" name="category" id="cat-multipurpose" class="filter-control">
+    <input type="radio" name="category" id="cat-security" class="filter-control">
+
+    <!-- Sort State -->
+    <input type="radio" name="sort" id="sort-name" class="filter-control" checked>
+
+    <!-- Header & Interactive Controls Navigation -->
+    <header class="bg-slate-800 border-b border-slate-700 py-6 shadow-md sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <h1 class="text-2xl font-bold text-white flex items-center gap-2">
+                    🛡️ DNS Filters Directory <span class="text-xs bg-sky-900 text-sky-300 px-2 py-0.5 rounded">No-JS</span>
+                </h1>
+                <p class="text-sm text-slate-400 mt-1">Pure HTML & CSS interactive blocklist catalog.</p>
+            </div>
+
+            <!-- Category Filter Buttons -->
+            <div class="flex flex-wrap gap-2">
+                <span class="text-xs text-slate-400 self-center mr-1">Category:</span>
+                <label for="cat-all" class="cursor-pointer text-xs px-3 py-1.5 rounded-lg bg-slate-700 border border-slate-600 text-slate-300 transition hover:bg-slate-600">All</label>
+                <label for="cat-ads" class="cursor-pointer text-xs px-3 py-1.5 rounded-lg bg-slate-700 border border-slate-600 text-slate-300 transition hover:bg-slate-600">Ads & Tracking</label>
+                <label for="cat-multipurpose" class="cursor-pointer text-xs px-3 py-1.5 rounded-lg bg-slate-700 border border-slate-600 text-slate-300 transition hover:bg-slate-600">Multipurpose</label>
+                <label for="cat-security" class="cursor-pointer text-xs px-3 py-1.5 rounded-lg bg-slate-700 border border-slate-600 text-slate-300 transition hover:bg-slate-600">Security</label>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="filters-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- Item 1 -->
+            <div class="filter-card bg-slate-800 border border-slate-700 rounded-xl p-5 flex flex-col justify-between shadow-lg" data-category="Ads & Tracking">
+                <div>
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-xs px-2.5 py-1 rounded-full bg-sky-900/50 text-sky-300 border border-sky-700/50 font-medium">Ads & Tracking</span>
+                        <span class="text-xs text-slate-400">⭐ 15.4k uses</span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-1">OISD Big</h3>
+                    <p class="text-sm text-slate-300 mb-4">Big, comprehensive blocklist to block ads, tracking, telemetry, and malicious sites.</p>
+                    <div class="flex flex-wrap gap-1.5 mb-4">
+                        <span class="text-[10px] bg-slate-900 text-slate-400 px-2 py-0.5 rounded border border-slate-700">Ads</span>
+                        <span class="text-[10px] bg-slate-900 text-slate-400 px-2 py-0.5 rounded border border-slate-700">Tracking</span>
+                    </div>
+                </div>
+                <div class="pt-4 border-t border-slate-700/60 flex items-center justify-between gap-2">
+                    <a href="https://big.oisd.nl" target="_blank" class="text-xs text-sky-400 hover:underline truncate max-w-[200px]">https://big.oisd.nl</a>
+                    <span class="bg-slate-700 text-xs px-3 py-1.5 rounded text-white font-medium select-all">Copy Link</span>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="filter-card bg-slate-800 border border-slate-700 rounded-xl p-5 flex flex-col justify-between shadow-lg" data-category="Multipurpose">
+                <div>
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-xs px-2.5 py-1 rounded-full bg-sky-900/50 text-sky-300 border border-sky-700/50 font-medium">Multipurpose</span>
+                        <span class="text-xs text-slate-400">⭐ 22.1k uses</span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-1">Hagezi Multi PRO</h3>
+                    <p class="text-sm text-slate-300 mb-4">Multi-functional blocklist protecting against ads, malware, fake news, and adult content.</p>
+                    <div class="flex flex-wrap gap-1.5 mb-4">
+                        <span class="text-[10px] bg-slate-900 text-slate-400 px-2 py-0.5 rounded border border-slate-700">Security</span>
+                        <span class="text-[10px] bg-slate-900 text-slate-400 px-2 py-0.5 rounded border border-slate-700">Ads</span>
+                    </div>
+                </div>
+                <div class="pt-4 border-t border-slate-700/60 flex items-center justify-between gap-2">
+                    <a href="https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/pro.txt" target="_blank" class="text-xs text-sky-400 hover:underline truncate max-w-[200px]">hagezi/pro.txt</a>
+                    <span class="bg-slate-700 text-xs px-3 py-1.5 rounded text-white font-medium select-all">Copy Link</span>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="filter-card bg-slate-800 border border-slate-700 rounded-xl p-5 flex flex-col justify-between shadow-lg" data-category="Security">
+                <div>
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-xs px-2.5 py-1 rounded-full bg-sky-900/50 text-sky-300 border border-sky-700/50 font-medium">Security</span>
+                        <span class="text-xs text-slate-400">⭐ 8.4k uses</span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-1">Phishing Army</h3>
+                    <p class="text-sm text-slate-300 mb-4">Up-to-date blocklist specifically targeting active phishing domains and scam sites.</p>
+                    <div class="flex flex-wrap gap-1.5 mb-4">
+                        <span class="text-[10px] bg-slate-900 text-slate-400 px-2 py-0.5 rounded border border-slate-700">Phishing</span>
+                        <span class="text-[10px] bg-slate-900 text-slate-400 px-2 py-0.5 rounded border border-slate-700">Security</span>
+                    </div>
+                </div>
+                <div class="pt-4 border-t border-slate-700/60 flex items-center justify-between gap-2">
+                    <a href="https://phishing.army/download/phishing_army_blocklist_domains.txt" target="_blank" class="text-xs text-sky-400 hover:underline truncate max-w-[200px]">phishing.army/...</a>
+                    <span class="bg-slate-700 text-xs px-3 py-1.5 rounded text-white font-medium select-all">Copy Link</span>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</body>
+</html>
