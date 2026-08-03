@@ -10,7 +10,7 @@
             --bg-card: #ffffff;
             --border-color: #d2d2d7;
             --text-main: #1d1d1f;
-            --text-muted: #3a3a3c;
+            --text-muted: #515154;
             --accent: #0066cc;
             --accent-rgb: 0, 102, 204;
             --badge-bg: rgba(0, 102, 204, 0.12);
@@ -35,6 +35,8 @@
             line-height: 1.47059;
             font-weight: 400;
             letter-spacing: -0.022em;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         header {
@@ -170,8 +172,8 @@
             border-radius: var(--radius-md);
             padding: 6px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            min-width: 200px;
-            max-height: 250px;
+            min-width: 220px;
+            max-height: 260px;
             overflow-y: auto;
             display: none;
             z-index: 99999;
@@ -194,18 +196,23 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 6px 10px;
+            padding: 7px 10px;
             border-radius: var(--radius-sm);
-            font-size: 0.78rem;
+            font-size: 0.81rem;
             cursor: pointer;
-            color: var(--text-main);
+            color: #111113;
             font-weight: 500;
             user-select: none;
             transition: background 0.15s ease, color 0.15s ease;
         }
 
+        .popover-item span {
+            font-weight: 500;
+            letter-spacing: -0.01em;
+        }
+
         .popover-item:hover {
-            background: rgba(var(--accent-rgb), 0.1);
+            background: rgba(var(--accent-rgb), 0.12);
             color: var(--accent);
         }
 
@@ -354,6 +361,7 @@
             color: var(--text-main);
         }
 
+        /* Enhanced Copy Button: Works as a direct link fallback if JS is disabled */
         .copy-box {
             background: var(--bg-main);
             border: 1px solid var(--border-color);
@@ -363,6 +371,9 @@
             cursor: pointer;
             font-size: 0.75rem;
             font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
             transition: all 0.2s;
         }
 
@@ -527,7 +538,7 @@
                     </div>
                     <div class="card-footer">
                         <a href="https://big.oisd.nl" target="_blank" class="url-display">https://big.oisd.nl</a>
-                        <code class="copy-box" onclick="copyText('https://big.oisd.nl', this)">Copy</code>
+                        <a href="https://big.oisd.nl" target="_blank" class="copy-box" onclick="copyText('https://big.oisd.nl', this); return false;">Copy</a>
                     </div>
                 </div>
             </div>
@@ -552,7 +563,7 @@
                     </div>
                     <div class="card-footer">
                         <a href="https://phishing.army/download/phishing_army_blocklist_domains.txt" target="_blank" class="url-display">phishing.army/domains.txt</a>
-                        <code class="copy-box" onclick="copyText('https://phishing.army/download/phishing_army_blocklist_domains.txt', this)">Copy</code>
+                        <a href="https://phishing.army/download/phishing_army_blocklist_domains.txt" target="_blank" class="copy-box" onclick="copyText('https://phishing.army/download/phishing_army_blocklist_domains.txt', this); return false;">Copy</a>
                     </div>
                 </div>
             </div>
@@ -577,7 +588,7 @@
                     </div>
                     <div class="card-footer">
                         <a href="https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/pro.txt" target="_blank" class="url-display">hagezi/pro.txt</a>
-                        <code class="copy-box" onclick="copyText('https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/pro.txt', this)">Copy</code>
+                        <a href="https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/pro.txt" target="_blank" class="copy-box" onclick="copyText('https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/wildcard/pro.txt', this); return false;">Copy</a>
                     </div>
                 </div>
             </div>
@@ -602,7 +613,7 @@
                     </div>
                     <div class="card-footer">
                         <a href="https://filters.adguard.com/extension/ublock/filters/2_optimized.txt" target="_blank" class="url-display">adguard.com/filters/2.txt</a>
-                        <code class="copy-box" onclick="copyText('https://filters.adguard.com/extension/ublock/filters/2_optimized.txt', this)">Copy</code>
+                        <a href="https://filters.adguard.com/extension/ublock/filters/2_optimized.txt" target="_blank" class="copy-box" onclick="copyText('https://filters.adguard.com/extension/ublock/filters/2_optimized.txt', this); return false;">Copy</a>
                     </div>
                 </div>
             </div>
@@ -627,7 +638,7 @@
                     </div>
                     <div class="card-footer">
                         <a href="https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts" target="_blank" class="url-display">stevenblack/hosts</a>
-                        <code class="copy-box" onclick="copyText('https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts', this)">Copy</code>
+                        <a href="https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts" target="_blank" class="copy-box" onclick="copyText('https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts', this); return false;">Copy</a>
                     </div>
                 </div>
             </div>
@@ -652,7 +663,7 @@
                     </div>
                     <div class="card-footer">
                         <a href="https://easylist.to/easylist/easylist.txt" target="_blank" class="url-display">easylist.to/easylist.txt</a>
-                        <code class="copy-box" onclick="copyText('https://easylist.to/easylist/easylist.txt', this)">Copy</code>
+                        <a href="https://easylist.to/easylist/easylist.txt" target="_blank" class="copy-box" onclick="copyText('https://easylist.to/easylist/easylist.txt', this); return false;">Copy</a>
                     </div>
                 </div>
             </div>
@@ -677,7 +688,7 @@
                     </div>
                     <div class="card-footer">
                         <a href="https://easylist.to/easylist/easyprivacy.txt" target="_blank" class="url-display">easylist.to/easyprivacy.txt</a>
-                        <code class="copy-box" onclick="copyText('https://easylist.to/easylist/easyprivacy.txt', this)">Copy</code>
+                        <a href="https://easylist.to/easylist/easyprivacy.txt" target="_blank" class="copy-box" onclick="copyText('https://easylist.to/easylist/easyprivacy.txt', this); return false;">Copy</a>
                     </div>
                 </div>
             </div>
@@ -702,7 +713,7 @@
                     </div>
                     <div class="card-footer">
                         <a href="https://small.oisd.nl" target="_blank" class="url-display">https://small.oisd.nl</a>
-                        <code class="copy-box" onclick="copyText('https://small.oisd.nl', this)">Copy</code>
+                        <a href="https://small.oisd.nl" target="_blank" class="copy-box" onclick="copyText('https://small.oisd.nl', this); return false;">Copy</a>
                     </div>
                 </div>
             </div>
@@ -727,7 +738,7 @@
                     </div>
                     <div class="card-footer">
                         <a href="https://raw.githubusercontent.com/blocklistproject/Lists/master/malware.txt" target="_blank" class="url-display">blocklistproject/malware.txt</a>
-                        <code class="copy-box" onclick="copyText('https://raw.githubusercontent.com/blocklistproject/Lists/master/malware.txt', this)">Copy</code>
+                        <a href="https://raw.githubusercontent.com/blocklistproject/Lists/master/malware.txt" target="_blank" class="copy-box" onclick="copyText('https://raw.githubusercontent.com/blocklistproject/Lists/master/malware.txt', this); return false;">Copy</a>
                     </div>
                 </div>
             </div>
@@ -752,7 +763,7 @@
                     </div>
                     <div class="card-footer">
                         <a href="https://o0.pages.dev/Pro/hosts.txt" target="_blank" class="url-display">https://o0.pages.dev/Pro/hosts.txt</a>
-                        <code class="copy-box" onclick="copyText('https://o0.pages.dev/Pro/hosts.txt', this)">Copy</code>
+                        <a href="https://o0.pages.dev/Pro/hosts.txt" target="_blank" class="copy-box" onclick="copyText('https://o0.pages.dev/Pro/hosts.txt', this); return false;">Copy</a>
                     </div>
                 </div>
             </div>
@@ -777,7 +788,7 @@
                     </div>
                     <div class="card-footer">
                         <a href="https://github.com/uBlockOrigin/uAssets/raw/master/filters/annoyances.txt" target="_blank" class="url-display">uAssets/annoyances.txt</a>
-                        <code class="copy-box" onclick="copyText('https://github.com/uBlockOrigin/uAssets/raw/master/filters/annoyances.txt', this)">Copy</code>
+                        <a href="https://github.com/uBlockOrigin/uAssets/raw/master/filters/annoyances.txt" target="_blank" class="copy-box" onclick="copyText('https://github.com/uBlockOrigin/uAssets/raw/master/filters/annoyances.txt', this); return false;">Copy</a>
                     </div>
                 </div>
             </div>
@@ -802,7 +813,7 @@
                     </div>
                     <div class="card-footer">
                         <a href="https://filters.adguard.com/extension/ublock/filters/3_optimized.txt" target="_blank" class="url-display">adguard.com/filters/3.txt</a>
-                        <code class="copy-box" onclick="copyText('https://filters.adguard.com/extension/ublock/filters/3_optimized.txt', this)">Copy</code>
+                        <a href="https://filters.adguard.com/extension/ublock/filters/3_optimized.txt" target="_blank" class="copy-box" onclick="copyText('https://filters.adguard.com/extension/ublock/filters/3_optimized.txt', this); return false;">Copy</a>
                     </div>
                 </div>
             </div>
@@ -825,7 +836,7 @@
         function fallbackCopyText(text, element) {
             const textArea = document.createElement("textarea");
             textArea.value = text;
-            textArea.style.position = "fixed";  // Avoid scrolling to bottom
+            textArea.style.position = "fixed";
             document.body.appendChild(textArea);
             textArea.focus();
             textArea.select();
@@ -835,7 +846,8 @@
                     showCopiedFeedback(element);
                 }
             } catch (err) {
-                console.error('Fallback copy failed', err);
+                // If execution fails completely, the fallback standard <a> link action takes over seamlessly
+                window.open(text, '_blank');
             }
             document.body.removeChild(textArea);
         }
