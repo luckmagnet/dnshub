@@ -32,12 +32,14 @@
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
         }
 
-        body {
+        html, body {
+            height: 100vh;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
             background-color: var(--bg-main);
             color: var(--text-main);
-            margin: 0;
-            padding: 0;
             line-height: 1.47059;
             font-weight: 400;
             letter-spacing: -0.022em;
@@ -58,7 +60,20 @@
             -webkit-backdrop-filter: blur(20px);
             white-space: nowrap;
             overflow-x: auto;
+            overflow-y: hidden;
             gap: 1.5rem;
+            flex-shrink: 0;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        /* Custom scrollbar styling specifically for scrollable header */
+        header::-webkit-scrollbar {
+            height: 4px;
+        }
+        header::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
         }
 
         [data-theme="dark"] header {
@@ -176,22 +191,32 @@
             color: var(--text-main);
             font-weight: 400;
             user-select: none;
-            transition: background 0.1s;
+            transition: background 0.15s ease, color 0.15s ease;
         }
 
         .popover-item:hover {
-            background: var(--accent);
-            color: #ffffff;
+            background: rgba(var(--accent-rgb), 0.1);
+            color: var(--accent);
         }
 
         .popover-item input[type="checkbox"] {
-            display: inline-block;
-            margin-right: 8px;
+            display: none;
         }
 
+        /* Smooth, eye-friendly subtle active state indicator instead of harsh checkmarks */
         .popover-item .checkmark {
             opacity: 0;
-            font-size: 0.7rem;
+            width: 6px;
+            height: 6px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            transition: opacity 0.15s ease;
+        }
+
+        .popover-item.selected {
+            font-weight: 500;
+            color: var(--accent);
+            background: rgba(var(--accent-rgb), 0.06);
         }
 
         .popover-item.selected .checkmark {
@@ -199,6 +224,9 @@
         }
 
         main {
+            height: calc(100vh - 65px);
+            overflow-y: auto;
+            box-sizing: border-box;
             max-width: 1400px;
             margin: 0 auto;
             padding: 2.5rem 1.5rem;
@@ -208,6 +236,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
             gap: 1.5rem;
+            padding-bottom: 3rem;
         }
 
         .card {
@@ -279,14 +308,22 @@
             font-size: 0.8rem;
         }
 
+        /* Enhanced clarity for links in dark mode */
         .card-links a {
             color: var(--accent);
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
+            opacity: 0.95;
+            transition: opacity 0.15s ease;
         }
 
         .card-links a:hover {
+            opacity: 1;
             text-decoration: underline;
+        }
+
+        [data-theme="dark"] .card-links a {
+            color: #4da3ff;
         }
 
         .card-footer {
@@ -405,23 +442,23 @@
                 <div class="macos-popover-menu" id="softwarePopoverMenu">
                     <div class="popover-item" data-value="AdGuard">
                         <span>AdGuard</span>
-                        <input type="checkbox" class="filter-input-popover" data-group="software" value="AdGuard" style="display:none;">
-                        <span class="checkmark">✓</span>
+                        <input type="checkbox" class="filter-input-popover" data-group="software" value="AdGuard">
+                        <span class="checkmark"></span>
                     </div>
                     <div class="popover-item" data-value="Pi-hole">
                         <span>Pi-hole</span>
-                        <input type="checkbox" class="filter-input-popover" data-group="software" value="Pi-hole" style="display:none;">
-                        <span class="checkmark">✓</span>
+                        <input type="checkbox" class="filter-input-popover" data-group="software" value="Pi-hole">
+                        <span class="checkmark"></span>
                     </div>
                     <div class="popover-item" data-value="uBlock">
                         <span>uBlock</span>
-                        <input type="checkbox" class="filter-input-popover" data-group="software" value="uBlock" style="display:none;">
-                        <span class="checkmark">✓</span>
+                        <input type="checkbox" class="filter-input-popover" data-group="software" value="uBlock">
+                        <span class="checkmark"></span>
                     </div>
                     <div class="popover-item" data-value="Control D">
                         <span>Control D</span>
-                        <input type="checkbox" class="filter-input-popover" data-group="software" value="Control D" style="display:none;">
-                        <span class="checkmark">✓</span>
+                        <input type="checkbox" class="filter-input-popover" data-group="software" value="Control D">
+                        <span class="checkmark"></span>
                     </div>
                 </div>
             </div>
