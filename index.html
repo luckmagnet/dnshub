@@ -159,10 +159,14 @@
             margin-right: 2px;
         }
 
-        /* macOS Popover Menu System */
+        /* Pure CSS macOS Popover Menu System */
         .macos-popover-container {
             position: relative;
             display: inline-block;
+        }
+
+        .macos-popover-toggle {
+            display: none;
         }
 
         .macos-popover-btn {
@@ -209,7 +213,8 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
         }
 
-        .macos-popover-menu.open {
+        /* Toggle popover visibility entirely via CSS checkbox state */
+        .macos-popover-toggle:checked ~ .macos-popover-menu {
             display: block;
             animation: popoverFadeIn 0.15s cubic-bezier(0.25, 1, 0.5, 1);
         }
@@ -220,6 +225,7 @@
         }
 
         .popover-item {
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -239,7 +245,9 @@
         }
 
         .popover-item input[type="checkbox"] {
-            display: none;
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
         }
 
         .popover-item .checkmark {
@@ -251,14 +259,19 @@
             transition: opacity 0.15s ease;
         }
 
-        .popover-item.selected {
+        .popover-item input[type="checkbox"]:checked ~ .checkmark {
+            opacity: 1;
+        }
+
+        .popover-item input[type="checkbox"]:checked + span {
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .popover-item:has(input[type="checkbox"]:checked) {
             font-weight: 600;
             color: var(--accent);
             background: rgba(var(--accent-rgb), 0.08);
-        }
-
-        .popover-item.selected .checkmark {
-            opacity: 1;
         }
 
         main {
@@ -425,8 +438,26 @@
         [data-theme="dark"] .theme-icon-light { display: none; }
         [data-theme="dark"] .theme-icon-dark { display: inline; }
 
-        .card.hidden {
-            display: none !important;
+        /* Pure CSS Filtering Logic Engine via :has() */
+        body:has(#cat-ads:checked) .card:not([data-cat*="Ads"]),
+        body:has(#cat-security:checked) .card:not([data-cat*="Security"]),
+        body:has(#cat-privacy:checked) .card:not([data-cat*="Privacy"]),
+        body:has(#cat-whitelist:checked) .card:not([data-cat*="Whitelist"]),
+        body:has(#cat-multi:checked) .card:not([data-cat*="Multipurpose"]) {
+            display: none;
+        }
+
+        body:has(#stance-unyielding:checked) .card:not([data-stance*="Unyielding"]),
+        body:has(#stance-harmonious:checked) .card:not([data-stance*="Harmonious"]),
+        body:has(#stance-steadfast:checked) .card:not([data-stance*="Steadfast"]) {
+            display: none;
+        }
+
+        body:has(#sw-adguard:checked) .card:not([data-software*="AdGuard"]),
+        body:has(#sw-pihole:checked) .card:not([data-software*="Pi-hole"]),
+        body:has(#sw-ublock:checked) .card:not([data-software*="uBlock"]),
+        body:has(#sw-controld:checked) .card:not([data-software*="Control D"]) {
+            display: none;
         }
     </style>
 </head>
@@ -443,23 +474,23 @@
                 <span class="control-group-label">Category:</span>
                 <div class="macos-segmented-control">
                     <div class="segmented-item">
-                        <input type="checkbox" id="cat-ads" class="filter-input" data-group="category" value="Ads">
+                        <input type="checkbox" id="cat-ads">
                         <label for="cat-ads">Ads</label>
                     </div>
                     <div class="segmented-item">
-                        <input type="checkbox" id="cat-security" class="filter-input" data-group="category" value="Security">
+                        <input type="checkbox" id="cat-security">
                         <label for="cat-security">Security</label>
                     </div>
                     <div class="segmented-item">
-                        <input type="checkbox" id="cat-privacy" class="filter-input" data-group="category" value="Privacy">
+                        <input type="checkbox" id="cat-privacy">
                         <label for="cat-privacy">Privacy</label>
                     </div>
                     <div class="segmented-item">
-                        <input type="checkbox" id="cat-whitelist" class="filter-input" data-group="category" value="Whitelist">
+                        <input type="checkbox" id="cat-whitelist">
                         <label for="cat-whitelist">Whitelist</label>
                     </div>
                     <div class="segmented-item">
-                        <input type="checkbox" id="cat-multi" class="filter-input" data-group="category" value="Multipurpose">
+                        <input type="checkbox" id="cat-multi">
                         <label for="cat-multi">Multi</label>
                     </div>
                 </div>
@@ -470,55 +501,57 @@
                 <span class="control-group-label">Stance:</span>
                 <div class="macos-segmented-control">
                     <div class="segmented-item">
-                        <input type="checkbox" id="stance-unyielding" class="filter-input" data-group="stance" value="Unyielding">
+                        <input type="checkbox" id="stance-unyielding">
                         <label for="stance-unyielding">Unyielding</label>
                     </div>
                     <div class="segmented-item">
-                        <input type="checkbox" id="stance-harmonious" class="filter-input" data-group="stance" value="Harmonious">
+                        <input type="checkbox" id="stance-harmonious">
                         <label for="stance-harmonious">Harmonious</label>
                     </div>
                     <div class="segmented-item">
-                        <input type="checkbox" id="stance-steadfast" class="filter-input" data-group="stance" value="Steadfast">
+                        <input type="checkbox" id="stance-steadfast">
                         <label for="stance-steadfast">Steadfast</label>
                     </div>
                 </div>
             </div>
 
-            <!-- Software Used Popover (macOS Style) -->
+            <!-- Software Used Popover (Pure CSS via checkbox toggle) -->
             <div class="macos-popover-container">
-                <button class="macos-popover-btn" id="softwarePopoverBtn">
+                <input type="checkbox" id="popoverToggle" class="macos-popover-toggle">
+                <label for="popoverToggle" class="macos-popover-btn">
                     <span>Software</span>
                     <span style="font-size: 0.6rem;">▼</span>
-                </button>
-                <div class="macos-popover-menu" id="softwarePopoverMenu">
-                    <div class="popover-item" data-value="AdGuard">
+                </label>
+                <div class="macos-popover-menu">
+                    <label class="popover-item">
                         <span>AdGuard</span>
-                        <input type="checkbox" class="filter-input-popover" data-group="software" value="AdGuard">
+                        <input type="checkbox" id="sw-adguard">
                         <span class="checkmark"></span>
-                    </div>
-                    <div class="popover-item" data-value="Pi-hole">
+                    </label>
+                    <label class="popover-item">
                         <span>Pi-hole</span>
-                        <input type="checkbox" class="filter-input-popover" data-group="software" value="Pi-hole">
+                        <input type="checkbox" id="sw-pihole">
                         <span class="checkmark"></span>
-                    </div>
-                    <div class="popover-item" data-value="uBlock">
+                    </label>
+                    <label class="popover-item">
                         <span>uBlock</span>
-                        <input type="checkbox" class="filter-input-popover" data-group="software" value="uBlock">
+                        <input type="checkbox" id="sw-ublock">
                         <span class="checkmark"></span>
-                    </div>
-                    <div class="popover-item" data-value="Control D">
+                    </label>
+                    <label class="popover-item">
                         <span>Control D</span>
-                        <input type="checkbox" class="filter-input-popover" data-group="software" value="Control D">
+                        <input type="checkbox" id="sw-controld">
                         <span class="checkmark"></span>
-                    </div>
+                    </label>
                 </div>
             </div>
             
-            <!-- Theme Toggle -->
-            <button class="theme-btn" id="themeToggle" title="Toggle Theme">
+            <!-- Theme Toggle (Native Checkbox hack implementation) -->
+            <input type="checkbox" id="themeToggleCheckbox" style="display:none;">
+            <label for="themeToggleCheckbox" class="theme-btn" style="cursor:pointer;" title="Toggle Theme">
                 <span class="theme-icon-light">🌙</span>
                 <span class="theme-icon-dark">☀️</span>
-            </button>
+            </label>
         </div>
     </header>
 
@@ -678,75 +711,25 @@
         </div>
     </main>
 
-    <script>
-        const htmlElement = document.documentElement;
-        const themeToggleBtn = document.getElementById('themeToggle');
-
-        themeToggleBtn.addEventListener('click', () => {
-            const currentTheme = htmlElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            htmlElement.setAttribute('data-theme', newTheme);
-        });
-
-        // macOS Popover toggle logic
-        const popoverBtn = document.getElementById('softwarePopoverBtn');
-        const popoverMenu = document.getElementById('softwarePopoverMenu');
-
-        popoverBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            popoverMenu.classList.toggle('open');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!popoverMenu.contains(e.target) && !popoverBtn.contains(e.target)) {
-                popoverMenu.classList.remove('open');
-            }
-        });
-
-        // Popover item selection engine
-        const popoverItems = document.querySelectorAll('.macos-popover-menu .popover-item');
-        popoverItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const checkbox = item.querySelector('input[type="checkbox"]');
-                checkbox.checked = !checkbox.checked;
-                if (checkbox.checked) {
-                    item.classList.add('selected');
-                } else {
-                    item.classList.remove('selected');
-                }
-                filterCards();
-            });
-        });
-
-        // Filtering engine logic
-        const filterCheckboxes = document.querySelectorAll('.filter-input');
-        const cards = document.querySelectorAll('.card');
-
-        function filterCards() {
-            const selectedCategories = Array.from(document.querySelectorAll('input[data-group="category"]:checked')).map(cb => cb.value);
-            const selectedStances = Array.from(document.querySelectorAll('input[data-group="stance"]:checked')).map(cb => cb.value);
-            const selectedSoftware = Array.from(document.querySelectorAll('input[data-group="software"]:checked')).map(cb => cb.value);
-
-            cards.forEach(card => {
-                const cardCat = card.getAttribute('data-cat');
-                const cardStance = card.getAttribute('data-stance');
-                const cardSoftware = card.getAttribute('data-software').split(', ').map(s => s.trim());
-
-                const matchesCat = selectedCategories.length === 0 || selectedCategories.includes(cardCat);
-                const matchesStance = selectedStances.length === 0 || selectedStances.includes(cardStance);
-                const matchesSoftware = selectedSoftware.length === 0 || cardSoftware.some(sw => selectedSoftware.includes(sw));
-
-                if (matchesCat && matchesStance && matchesSoftware) {
-                    card.classList.remove('hidden');
-                } else {
-                    card.classList.add('hidden');
-                }
-            });
+    <style>
+        /* Pure CSS Dark/Light Theme Handler */
+        html:has(#themeToggleCheckbox:checked) {
+            color-scheme: dark;
         }
-
-        filterCheckboxes.forEach(cb => {
-            cb.addEventListener('change', filterCards);
-        });
-    </script>
+        html:has(#themeToggleCheckbox:checked) :root {
+            --bg-main: #000000;
+            --bg-card: #1c1c1e;
+            --border-color: #38383a;
+            --text-main: #f5f5f7;
+            --text-muted: #d1d1d6;
+            --accent: #0a84ff;
+            --accent-rgb: 10, 132, 255;
+            --badge-bg: rgba(10, 132, 255, 0.25);
+            --badge-text: #82b1ff;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+        html:has(#themeToggleCheckbox:checked) .theme-icon-light { display: none; }
+        html:has(#themeToggleCheckbox:checked) .theme-icon-dark { display: inline; }
+    </style>
 </body>
 </html>
